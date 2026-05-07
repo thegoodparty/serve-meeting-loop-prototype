@@ -1687,6 +1687,49 @@
       color: #FFFFFF;
     }
 
+    /* ---------- Minimal one-line audience / schedule row (composed-recap) ---------- */
+    .minimal-row {
+      display: flex;
+      flex-direction: column;
+    }
+    .minimal-row + .minimal-row { margin-top: 12px; }
+    .minimal-summary {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 0;
+    }
+    .minimal-summary .ms-left {
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--gp-text-primary);
+    }
+    .minimal-summary .ms-label {
+      color: var(--gp-text-muted);
+      font-weight: 400;
+      margin-right: 6px;
+    }
+    .minimal-summary .ms-value { font-weight: 600; }
+    .minimal-link {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gp-primary);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .minimal-link:hover { text-decoration: underline; }
+    .minimal-picker {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .minimal-row.open .minimal-picker { display: flex; }
+
     /* Subject and body editors for recap-draft */
     .draft-input {
       width: 100%;
@@ -4291,52 +4334,49 @@
               <span><strong>Built from</strong> your briefing and your <span id="compFingerprintCount">three</span> priorities.</span>
             </div>
 
-            <p class="text-xs font-semibold uppercase tracking-wider mt-2" style="color: var(--gp-text-muted);">Pre-meeting message, draft</p>
-            <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">Send an update before tonight's Town Hall</h1>
-            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);">Drafted from your briefing and your priorities. Edit anything, choose who hears from you and when, then send.</p>
+            <p class="text-xs font-semibold uppercase tracking-wider mt-2" style="color: var(--gp-text-muted);">Pre-meeting SMS, draft</p>
+            <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">Send a text before tonight's Town Hall</h1>
+            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);">Drafted from your briefing and your priorities. Edit, then send.</p>
 
-            <!-- AUDIENCE selector -->
-            <div class="selector-row mb-3" id="composedAudienceSelector">
-              <p class="label">Send to</p>
-              <button class="selector-summary" onclick="toggleSelector('composedAudienceSelector')">
-                <span class="selector-current">
-                  <span class="sc-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                      <circle cx="9" cy="7" r="4"/>
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                  </span>
-                  <span id="composedAudienceLabel">Northside neighborhood · 412</span>
+            <!-- BODY (now first) -->
+            <div class="mb-5">
+              <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Your message</label>
+              <textarea class="recap-textarea mt-1.5" id="composedBody" rows="6" style="min-height: 168px;">Hi neighbor, Renee here. Tonight's Town Hall covers three items I want to flag: public safety camera expansion, the FY27 property tax rate, and the Northside revitalization plan. Here's where I'm leaning. Reach out if you have a perspective you want me to bring.</textarea>
+              <p class="text-xs mt-2" id="composedBodyMeta" style="color: var(--gp-text-muted);">Drafted in 4 seconds. <span id="composedBodyCount">262</span> characters, sends as 2 SMS.</p>
+            </div>
+
+            <!-- MINIMAL: Sending to -->
+            <div class="minimal-row" id="composedAudienceMin">
+              <div class="minimal-summary">
+                <span class="ms-left">
+                  <span class="ms-label">Sending to:</span>
+                  <span class="ms-value" id="composedAudienceSummary">All constituents (1,247)</span>
                 </span>
-                <svg class="selector-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"/>
-                </svg>
-              </button>
-              <div class="selector-options">
-                <button class="selector-option active" data-audience="northside" data-label="Northside neighborhood · 412" onclick="selectComposedAudience(this)">
-                  <span>
-                    Northside neighborhood
-                    <span class="opt-meta block mt-0.5">412 residents · directly affected by tonight's vote</span>
-                  </span>
-                  <span class="opt-check">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  </span>
-                </button>
-                <button class="selector-option" data-audience="all" data-label="All constituents · 1,248" onclick="selectComposedAudience(this)">
+                <button class="minimal-link" onclick="toggleMinimalRow('composedAudienceMin')">Change</button>
+              </div>
+              <div class="minimal-picker" id="composedAudiencePicker">
+                <button class="selector-option active" data-audience="all" data-label="All constituents (1,247)" onclick="selectComposedAudience(this)">
                   <span>
                     All constituents on your newsletter list
-                    <span class="opt-meta block mt-0.5">1,248 residents</span>
+                    <span class="opt-meta block mt-0.5">1,247 residents</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-audience="poll-respondents" data-label="Last poll respondents · 89" onclick="selectComposedAudience(this)">
+                <button class="selector-option" data-audience="northside" data-label="Northside neighborhood (412)" onclick="selectComposedAudience(this)">
+                  <span>
+                    Northside neighborhood
+                    <span class="opt-meta block mt-0.5">412 residents, directly affected by tonight's vote</span>
+                  </span>
+                  <span class="opt-check">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                </button>
+                <button class="selector-option" data-audience="poll-respondents" data-label="Last poll respondents (89)" onclick="selectComposedAudience(this)">
                   <span>
                     People who responded to your last poll
-                    <span class="opt-meta block mt-0.5">89 residents · already engaged on tax rate</span>
+                    <span class="opt-meta block mt-0.5">89 residents, already engaged on tax rate</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -4354,24 +4394,16 @@
               </div>
             </div>
 
-            <!-- SCHEDULE selector -->
-            <div class="selector-row mb-4" id="composedScheduleSelector">
-              <p class="label">When to send</p>
-              <button class="selector-summary" onclick="toggleSelector('composedScheduleSelector')">
-                <span class="selector-current">
-                  <span class="sc-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10"/>
-                      <polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                  </span>
-                  <span id="composedScheduleLabel">Now</span>
+            <!-- MINIMAL: Send -->
+            <div class="minimal-row mb-5" id="composedScheduleMin">
+              <div class="minimal-summary">
+                <span class="ms-left">
+                  <span class="ms-label">Send:</span>
+                  <span class="ms-value" id="composedScheduleSummary">Now</span>
                 </span>
-                <svg class="selector-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"/>
-                </svg>
-              </button>
-              <div class="selector-options">
+                <button class="minimal-link" onclick="toggleMinimalRow('composedScheduleMin')">Schedule instead</button>
+              </div>
+              <div class="minimal-picker" id="composedSchedulePicker">
                 <button class="selector-option active" data-schedule="now" data-label="Now" onclick="selectComposedSchedule(this)">
                   <span>
                     Now
@@ -4381,19 +4413,19 @@
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-schedule="hour-before" data-label="1 hour before the meeting · Tue May 12, 5:30 PM" onclick="selectComposedSchedule(this)">
+                <button class="selector-option" data-schedule="hour-before" data-label="1 hour before the meeting (Tue May 12, 5:30 PM)" onclick="selectComposedSchedule(this)">
                   <span>
                     1 hour before the meeting
-                    <span class="opt-meta block mt-0.5">Tue May 12 · 5:30 PM · top-of-mind reminder</span>
+                    <span class="opt-meta block mt-0.5">Tue May 12, 5:30 PM, top-of-mind reminder</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-schedule="tomorrow-am" data-label="Tomorrow morning · Thu May 7, 8 AM" onclick="selectComposedSchedule(this)">
+                <button class="selector-option" data-schedule="tomorrow-am" data-label="Tomorrow morning (Thu May 7, 8 AM)" onclick="selectComposedSchedule(this)">
                   <span>
                     Tomorrow morning
-                    <span class="opt-meta block mt-0.5">Thu May 7 · 8:00 AM · highest open rate</span>
+                    <span class="opt-meta block mt-0.5">Thu May 7, 8:00 AM, highest open rate</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -4411,59 +4443,16 @@
               </div>
             </div>
 
-            <!-- SUBJECT -->
-            <div class="mb-3">
-              <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Subject</label>
-              <input
-                type="text"
-                value="Tonight at the Town Hall, three things to flag"
-                class="draft-input mt-1.5"
-              />
-            </div>
-
-            <!-- BODY -->
-            <div class="mb-5">
-              <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Message</label>
-              <textarea class="recap-textarea mt-1.5" id="composedBody" rows="22" style="min-height: 540px;">Hi neighbor, Renee here. Tonight's Town Hall covers three items I want to flag for you in Northside.
-
-1. CAMERAS · Resolution 2026-19, vote tonight.
-A $2.4M contract for 8 public safety cameras, including coverage on Riverside Ave. I'm leaning yes, conditioned on quarterly privacy audits and Phase 1 finalizing Northside coverage before installation begins.
-
-2. FY27 TAX RATE · Discussion only tonight, first reading May 21.
-Three scenarios on the table: flat 17.6¢, 18.2¢, and 18.9¢. I plan to push staff to name the specific projects each cent above flat would fund before any rate gets adopted.
-
-3. NORTHSIDE REVITALIZATION · Final approval tonight.
-The conditions package for the $24M mixed-use project on the former mill site. I'm leaning yes if the 15% affordable housing set-aside stays intact with enforceable compliance triggers.
-
-Reach out before the meeting if you have questions or want me to raise something on your behalf. Reply to this email or text me at the number below.
-
-Renee Wells
-District 3</textarea>
-              <p class="text-xs mt-2" style="color: var(--gp-text-muted);">Drafted in 4 seconds from your briefing and your priorities.</p>
-            </div>
-
-            <!-- AUTOMATE -->
-            <div class="automate-row mb-5">
-              <div class="flex-1">
-                <p class="text-sm font-semibold" style="color: var(--gp-text-primary);">Automate this in the future</p>
-                <p class="text-xs mt-1" style="color: var(--gp-text-subtle); line-height: 1.5;">Before future meetings, we'll draft a pre-meeting message automatically. You'll just need to approve before it sends.</p>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="automateToggleComposed" onchange="syncAutomatePref(this.checked)" />
-                <span class="slider"></span>
-              </label>
-            </div>
-
             <!-- ACTIONS -->
             <div>
               <button class="btn-primary" onclick="sendComposedRecap()">
-                Send to constituents
+                Send SMS to constituents
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"/>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"/>
                 </svg>
               </button>
-              <button class="btn-outline w-full mt-3" onclick="showToast('Pre-meeting message saved as draft')">Save draft</button>
+              <button class="btn-outline w-full mt-3" onclick="showToast('Pre-meeting SMS saved as draft')">Save draft</button>
             </div>
 
           </div>
@@ -7358,43 +7347,56 @@ District 3</div>
     setTimeout(() => row.classList.remove('open'), 160);
   }
 
-  // Composed-recap variants of the audience/schedule pickers (different ids, same UX)
-  function selectComposedAudience(btn) {
-    const row = document.getElementById('composedAudienceSelector');
+  // Composed-recap minimal one-line audience/schedule rows
+  function toggleMinimalRow(id) {
+    const row = document.getElementById(id);
     if (!row) return;
-    row.querySelectorAll('.selector-option').forEach(o => o.classList.remove('active'));
+    // Close the other minimal row when opening one
+    document.querySelectorAll('.minimal-row.open').forEach(r => {
+      if (r !== row) r.classList.remove('open');
+    });
+    row.classList.toggle('open');
+  }
+
+  function selectComposedAudience(btn) {
+    const picker = btn.closest('.minimal-picker');
+    if (!picker) return;
+    picker.querySelectorAll('.selector-option').forEach(o => o.classList.remove('active'));
     btn.classList.add('active');
     const label = btn.dataset.label || 'All constituents';
-    document.getElementById('composedAudienceLabel').textContent = label;
-    setTimeout(() => row.classList.remove('open'), 160);
+    const summary = document.getElementById('composedAudienceSummary');
+    if (summary) summary.textContent = label;
+    const row = document.getElementById('composedAudienceMin');
+    if (row) setTimeout(() => row.classList.remove('open'), 160);
   }
 
   function selectComposedSchedule(btn) {
-    const row = document.getElementById('composedScheduleSelector');
-    if (!row) return;
-    row.querySelectorAll('.selector-option').forEach(o => o.classList.remove('active'));
+    const picker = btn.closest('.minimal-picker');
+    if (!picker) return;
+    picker.querySelectorAll('.selector-option').forEach(o => o.classList.remove('active'));
     btn.classList.add('active');
     const label = btn.dataset.label || 'Now';
-    document.getElementById('composedScheduleLabel').textContent = label;
-    setTimeout(() => row.classList.remove('open'), 160);
+    const summary = document.getElementById('composedScheduleSummary');
+    if (summary) summary.textContent = label;
+    const row = document.getElementById('composedScheduleMin');
+    if (row) setTimeout(() => row.classList.remove('open'), 160);
   }
 
   function syncAutomatePref(checked) {
-    // Keep all automate toggles (draft + sent + composed) in sync across screens
+    // Keep automate toggles on the post-meeting recap-draft and recap-sent surfaces in sync.
+    // The pre-meeting composed-recap surface no longer has an automate toggle.
     const a = document.getElementById('automateToggleDraft');
     const b = document.getElementById('automateToggleSent');
-    const c = document.getElementById('automateToggleComposed');
     if (a) a.checked = checked;
     if (b) b.checked = checked;
-    if (c) c.checked = checked;
     if (checked) showToast('Automation on for next meeting');
   }
 
   // Send the composed recap (PRE-meeting message) and route through the post-send experience
   function sendComposedRecap() {
-    const active = document.querySelector('#composedAudienceSelector .selector-option.active');
-    let recipientLabel = 'Northside neighborhood';
-    let recipientPhrase = 'your Northside list';
+    const active = document.querySelector('#composedAudiencePicker .selector-option.active');
+    let recipientLabel = 'All constituents';
+    let recipientPhrase = 'your full newsletter list';
     if (active) {
       const aud = active.dataset.audience;
       if (aud === 'northside') { recipientLabel = 'Northside neighborhood'; recipientPhrase = 'your Northside list'; }
@@ -7607,6 +7609,20 @@ District 3</div>
     try {
       if (rs === 'sent') sessionStorage.setItem('cc-v3-recap-sent', '1');
     } catch (e) {}
+
+    // Live SMS character count + segment count on the composed-recap body
+    const composedBody = document.getElementById('composedBody');
+    const composedBodyCount = document.getElementById('composedBodyCount');
+    const composedBodyMeta = document.getElementById('composedBodyMeta');
+    if (composedBody && composedBodyCount && composedBodyMeta) {
+      const updateSmsMeta = () => {
+        const len = composedBody.value.length;
+        composedBodyCount.textContent = String(len);
+        const segments = len === 0 ? 1 : Math.ceil(len / 160);
+        composedBodyMeta.innerHTML = 'Drafted in 4 seconds. <span id="composedBodyCount">' + len + '</span> characters, sends as ' + segments + ' SMS.';
+      };
+      composedBody.addEventListener('input', updateSmsMeta);
+    }
 
     goToScreen('home');
   });
