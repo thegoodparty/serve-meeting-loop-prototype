@@ -4970,58 +4970,55 @@ District 3</textarea>
               Back
             </button>
 
-            <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Post-meeting recap · draft</p>
-            <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">Last night's Town Hall recap</h1>
-            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);">Drafted from your notes and the agenda. Edit anything, choose who and when, then send.</p>
+            <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Post-meeting SMS · draft</p>
+            <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">Send a text after last night's Town Hall</h1>
+            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);">Drafted from your notes and the agenda. Edit, then send.</p>
 
-            <!-- AUDIENCE selector -->
-            <div class="selector-row mb-3" id="audienceSelector">
-              <p class="label">Send to</p>
-              <button class="selector-summary" onclick="toggleSelector('audienceSelector')">
-                <span class="selector-current">
-                  <span class="sc-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                      <circle cx="9" cy="7" r="4"/>
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                  </span>
-                  <span id="audienceCurrentLabel">Northside neighborhood · 412</span>
+            <!-- BODY (now first) -->
+            <div class="mb-5">
+              <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Your message</label>
+              <textarea class="recap-textarea mt-1.5" id="postMeetingBody" rows="6" style="min-height: 168px;">Hi neighbor, Renee here. Last night's Town Hall just wrapped. Public safety cameras passed with the privacy audit clause I asked for, the FY27 tax rate vote was tabled until May 21, and Northside passed with the 15% affordable set-aside. Reach out if you want to talk.</textarea>
+              <p class="text-xs mt-2" id="postMeetingBodyMeta" style="color: var(--gp-text-muted);">Drafted in 4 seconds. <span id="postMeetingBodyCount">268</span> characters, sends as 2 SMS.</p>
+            </div>
+
+            <!-- MINIMAL: Sending to -->
+            <div class="minimal-row" id="postMeetingAudienceMin">
+              <div class="minimal-summary">
+                <span class="ms-left">
+                  <span class="ms-label">Sending to:</span>
+                  <span class="ms-value" id="postMeetingAudienceSummary">All constituents (1,247)</span>
                 </span>
-                <svg class="selector-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"/>
-                </svg>
-              </button>
-              <div class="selector-options">
-                <button class="selector-option active" data-audience="northside" data-label="Northside neighborhood · 412" onclick="selectAudience(this)">
-                  <span>
-                    Northside neighborhood
-                    <span class="opt-meta block mt-0.5">412 residents · directly affected by last night's vote</span>
-                  </span>
-                  <span class="opt-check">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  </span>
-                </button>
-                <button class="selector-option" data-audience="all" data-label="All constituents · 1,248" onclick="selectAudience(this)">
+                <button class="minimal-link" onclick="toggleMinimalRow('postMeetingAudienceMin')">Change</button>
+              </div>
+              <div class="minimal-picker" id="postMeetingAudiencePicker">
+                <button class="selector-option active" data-audience="all" data-label="All constituents (1,247)" onclick="selectPostMeetingAudience(this)">
                   <span>
                     All constituents on your newsletter list
-                    <span class="opt-meta block mt-0.5">1,248 residents</span>
+                    <span class="opt-meta block mt-0.5">1,247 residents</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-audience="poll-respondents" data-label="Last poll respondents · 89" onclick="selectAudience(this)">
+                <button class="selector-option" data-audience="northside" data-label="Northside neighborhood (412)" onclick="selectPostMeetingAudience(this)">
+                  <span>
+                    Northside neighborhood
+                    <span class="opt-meta block mt-0.5">412 residents, directly affected by last night's vote</span>
+                  </span>
+                  <span class="opt-check">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                </button>
+                <button class="selector-option" data-audience="poll-respondents" data-label="Last poll respondents (89)" onclick="selectPostMeetingAudience(this)">
                   <span>
                     People who responded to your last poll
-                    <span class="opt-meta block mt-0.5">89 residents · already engaged on tax rate</span>
+                    <span class="opt-meta block mt-0.5">89 residents, already engaged on tax rate</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-audience="custom" data-label="Custom segment" onclick="selectAudience(this)">
+                <button class="selector-option" data-audience="custom" data-label="Custom segment" onclick="selectPostMeetingAudience(this)">
                   <span>
                     Custom segment
                     <span class="opt-meta block mt-0.5">Choose by neighborhood, party, or signal</span>
@@ -5033,52 +5030,44 @@ District 3</textarea>
               </div>
             </div>
 
-            <!-- SCHEDULE selector -->
-            <div class="selector-row mb-4" id="scheduleSelector">
-              <p class="label">Send when</p>
-              <button class="selector-summary" onclick="toggleSelector('scheduleSelector')">
-                <span class="selector-current">
-                  <span class="sc-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10"/>
-                      <polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                  </span>
-                  <span id="scheduleCurrentLabel">Now</span>
+            <!-- MINIMAL: Send -->
+            <div class="minimal-row mb-5" id="postMeetingScheduleMin">
+              <div class="minimal-summary">
+                <span class="ms-left">
+                  <span class="ms-label">Send:</span>
+                  <span class="ms-value" id="postMeetingScheduleSummary">Now · Wed May 13, morning</span>
                 </span>
-                <svg class="selector-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"/>
-                </svg>
-              </button>
-              <div class="selector-options">
-                <button class="selector-option active" data-schedule="now" data-label="Now · Wed May 13, morning" onclick="selectSchedule(this)">
+                <button class="minimal-link" onclick="toggleMinimalRow('postMeetingScheduleMin')">Schedule instead</button>
+              </div>
+              <div class="minimal-picker" id="postMeetingSchedulePicker">
+                <button class="selector-option active" data-schedule="now" data-label="Now · Wed May 13, morning" onclick="selectPostMeetingSchedule(this)">
                   <span>
                     Now
-                    <span class="opt-meta block mt-0.5">Wed May 13 · sends in about 30 seconds</span>
+                    <span class="opt-meta block mt-0.5">Wed May 13, sends in about 30 seconds</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-schedule="tomorrow-am" data-label="Tomorrow morning · Thu May 14, 8 AM" onclick="selectSchedule(this)">
+                <button class="selector-option" data-schedule="tomorrow-am" data-label="Tomorrow morning (Thu May 14, 8 AM)" onclick="selectPostMeetingSchedule(this)">
                   <span>
                     Tomorrow morning
-                    <span class="opt-meta block mt-0.5">Thu May 14 · 8:00 AM · highest open rate</span>
+                    <span class="opt-meta block mt-0.5">Thu May 14, 8:00 AM, highest open rate</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-schedule="two-days" data-label="In 2 days · Fri May 15, 8 AM" onclick="selectSchedule(this)">
+                <button class="selector-option" data-schedule="two-days" data-label="In 2 days (Fri May 15, 8 AM)" onclick="selectPostMeetingSchedule(this)">
                   <span>
                     In 2 days
-                    <span class="opt-meta block mt-0.5">Fri May 15 · 8:00 AM</span>
+                    <span class="opt-meta block mt-0.5">Fri May 15, 8:00 AM</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-schedule="custom" data-label="Pick a time..." onclick="selectSchedule(this)">
+                <button class="selector-option" data-schedule="custom" data-label="Pick a time..." onclick="selectPostMeetingSchedule(this)">
                   <span>
                     Pick a time...
                     <span class="opt-meta block mt-0.5">Choose your own date and hour</span>
@@ -5090,58 +5079,16 @@ District 3</textarea>
               </div>
             </div>
 
-            <!-- SUBJECT -->
-            <div class="mb-3">
-              <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Subject</label>
-              <input
-                type="text"
-                value="Recap of last night's Town Hall · Public safety, taxes, and Northside"
-                class="draft-input mt-1.5"
-              />
-            </div>
-
-            <!-- BODY -->
-            <div class="mb-5">
-              <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Message</label>
-              <textarea class="recap-textarea mt-1.5" id="postMeetingBody" rows="22" style="min-height: 540px;">Hi neighbors, Renee here. Quick recap from last night's meeting and what it means for you in Northside.
-
-1. CAMERAS · Resolution 2026-19 passed 5-2.
-I voted yes after staff confirmed our intersection at Riverside Ave is included in Phase 1, with quarterly privacy audits in the contract. Installation begins July 1. Public information sessions in late June.
-
-2. FY27 TAX RATE · Discussion only, no vote last night.
-The Town Manager presented three scenarios (flat, +1¢, +3¢). I declined to support any rate above flat until staff names the specific projects each cent funds. The first reading is May 21. I'll send a follow-up before then.
-
-3. NORTHSIDE REVITALIZATION · Final approval passed 7-0.
-The 15% affordable housing set-aside is now binding, with annual compliance reporting. Construction begins fall 2026. Displacement indicators (vacancy, rent change, business turnover) will be tracked from day one.
-
-Reply to this with any questions and I'll respond personally. The next meeting is May 26.
-
-Renee Wells
-District 3</textarea>
-              <p class="text-xs mt-2" style="color: var(--gp-text-muted);">Drafted in 4 seconds from your notes and the agenda</p>
-            </div>
-
-            <!-- AUTOMATE -->
-            <div class="automate-row mb-5">
-              <div class="flex-1">
-                <p class="text-sm font-semibold" style="color: var(--gp-text-primary);">Automate this in the future</p>
-                <p class="text-xs mt-1" style="color: var(--gp-text-subtle); line-height: 1.5;">After future meetings, we'll draft and queue a recap automatically. You'll just need to approve before it sends.</p>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="automateToggleDraft" onchange="syncAutomatePref(this.checked)" />
-                <span class="slider"></span>
-              </label>
-            </div>
-
             <!-- ACTIONS -->
             <div>
               <button class="btn-primary" onclick="sendPostMeetingRecap()">
-                Send
+                Send SMS to constituents
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"/>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"/>
                 </svg>
               </button>
+              <button class="btn-outline w-full mt-3" onclick="showToast('Post-meeting SMS saved as draft')">Save draft</button>
             </div>
           </div>
         </section>
@@ -7382,13 +7329,36 @@ District 3</div>
     if (row) setTimeout(() => row.classList.remove('open'), 160);
   }
 
+  // Post-meeting recap-draft minimal one-line audience/schedule rows
+  function selectPostMeetingAudience(btn) {
+    const picker = btn.closest('.minimal-picker');
+    if (!picker) return;
+    picker.querySelectorAll('.selector-option').forEach(o => o.classList.remove('active'));
+    btn.classList.add('active');
+    const label = btn.dataset.label || 'All constituents';
+    const summary = document.getElementById('postMeetingAudienceSummary');
+    if (summary) summary.textContent = label;
+    const row = document.getElementById('postMeetingAudienceMin');
+    if (row) setTimeout(() => row.classList.remove('open'), 160);
+  }
+
+  function selectPostMeetingSchedule(btn) {
+    const picker = btn.closest('.minimal-picker');
+    if (!picker) return;
+    picker.querySelectorAll('.selector-option').forEach(o => o.classList.remove('active'));
+    btn.classList.add('active');
+    const label = btn.dataset.label || 'Now';
+    const summary = document.getElementById('postMeetingScheduleSummary');
+    if (summary) summary.textContent = label;
+    const row = document.getElementById('postMeetingScheduleMin');
+    if (row) setTimeout(() => row.classList.remove('open'), 160);
+  }
+
   function syncAutomatePref(checked) {
-    // Keep automate toggles on the post-meeting recap-draft and recap-sent surfaces in sync.
-    // The pre-meeting composed-recap surface no longer has an automate toggle.
-    const a = document.getElementById('automateToggleDraft');
-    const b = document.getElementById('automateToggleSent');
-    if (a) a.checked = checked;
-    if (b) b.checked = checked;
+    // The only remaining automate toggle lives on the recap-sent confirmation
+    // surface. The recap-draft and composed-recap surfaces no longer have one.
+    const t = document.getElementById('automateToggleSent');
+    if (t) t.checked = checked;
     if (checked) showToast('Automation on for next meeting');
   }
 
@@ -7508,10 +7478,10 @@ District 3</div>
   }
 
   function sendPostMeetingRecap() {
-    // Read current audience to write a label (no specific count) into the sent confirmation
-    const active = document.querySelector('#audienceSelector .selector-option.active');
-    let recipientLabel = 'Northside neighborhood';
-    let recipientPhrase = 'your Northside list';
+    // Read current audience from the post-meeting minimal picker
+    const active = document.querySelector('#postMeetingAudiencePicker .selector-option.active');
+    let recipientLabel = 'All constituents';
+    let recipientPhrase = 'your full newsletter list';
     if (active) {
       const aud = active.dataset.audience;
       if (aud === 'northside') { recipientLabel = 'Northside neighborhood'; recipientPhrase = 'your Northside list'; }
@@ -7622,6 +7592,20 @@ District 3</div>
         composedBodyMeta.innerHTML = 'Drafted in 4 seconds. <span id="composedBodyCount">' + len + '</span> characters, sends as ' + segments + ' SMS.';
       };
       composedBody.addEventListener('input', updateSmsMeta);
+    }
+
+    // Live SMS character count + segment count on the post-meeting recap-draft body
+    const postMeetingBody = document.getElementById('postMeetingBody');
+    const postMeetingBodyMeta = document.getElementById('postMeetingBodyMeta');
+    if (postMeetingBody && postMeetingBodyMeta) {
+      const updatePostSmsMeta = () => {
+        const len = postMeetingBody.value.length;
+        const segments = len === 0 ? 1 : Math.ceil(len / 160);
+        postMeetingBodyMeta.innerHTML = 'Drafted in 4 seconds. <span id="postMeetingBodyCount">' + len + '</span> characters, sends as ' + segments + ' SMS.';
+      };
+      postMeetingBody.addEventListener('input', updatePostSmsMeta);
+      // Run once on load so the static "281 characters" matches whatever we shipped
+      updatePostSmsMeta();
     }
 
     goToScreen('home');
