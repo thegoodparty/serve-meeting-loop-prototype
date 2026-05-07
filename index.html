@@ -2908,6 +2908,35 @@
       color: var(--gp-text-muted);
       margin-bottom: 6px;
     }
+    .live-ag-detail .ag-note-label {
+      display: block;
+      font-size: 11px;
+      color: var(--gp-text-muted);
+      margin: 12px 0 6px 0;
+    }
+    .live-ag-detail .ag-note {
+      width: 100%;
+      min-height: 64px;
+      border: 1px solid var(--gp-border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--gp-text-primary);
+      background: #FFFFFF;
+      line-height: 1.5;
+      resize: vertical;
+      box-sizing: border-box;
+      transition: border-color 120ms ease, box-shadow 120ms ease;
+    }
+    .live-ag-detail .ag-note::placeholder {
+      color: var(--gp-text-muted);
+    }
+    .live-ag-detail .ag-note:focus {
+      outline: none;
+      border-color: var(--gp-primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
 
     .quick-capture {
       margin-top: 10px;
@@ -3518,6 +3547,15 @@
                       <button data-pos="abstain" onclick="setPosition('cameras', 'abstain', this); event.stopPropagation();">Abstain</button>
                       <button data-pos="undecided" onclick="setPosition('cameras', 'undecided', this); event.stopPropagation();">Undecided</button>
                     </div>
+                    <label class="ag-note-label" for="ag-notes-cameras">Notes for this item</label>
+                    <textarea
+                      id="ag-notes-cameras"
+                      class="ag-note"
+                      data-issue="cameras"
+                      placeholder="Capture a note on this item, paste a quote, or add a question to follow up."
+                      onclick="event.stopPropagation();"
+                      onchange="addLiveNote('cameras', this)"
+                    ></textarea>
                   </div>
                 </div>
 
@@ -3563,6 +3601,15 @@
                       <button data-pos="abstain" onclick="setPosition('tax', 'abstain', this); event.stopPropagation();">Abstain</button>
                       <button data-pos="undecided" onclick="setPosition('tax', 'undecided', this); event.stopPropagation();">Undecided</button>
                     </div>
+                    <label class="ag-note-label" for="ag-notes-tax">Notes for this item</label>
+                    <textarea
+                      id="ag-notes-tax"
+                      class="ag-note"
+                      data-issue="tax"
+                      placeholder="Capture a note on this item, paste a quote, or add a question to follow up."
+                      onclick="event.stopPropagation();"
+                      onchange="addLiveNote('tax', this)"
+                    ></textarea>
                   </div>
                 </div>
 
@@ -3608,6 +3655,15 @@
                       <button data-pos="abstain" onclick="setPosition('northside', 'abstain', this); event.stopPropagation();">Abstain</button>
                       <button data-pos="undecided" onclick="setPosition('northside', 'undecided', this); event.stopPropagation();">Undecided</button>
                     </div>
+                    <label class="ag-note-label" for="ag-notes-northside">Notes for this item</label>
+                    <textarea
+                      id="ag-notes-northside"
+                      class="ag-note"
+                      data-issue="northside"
+                      placeholder="Capture a note on this item, paste a quote, or add a question to follow up."
+                      onclick="event.stopPropagation();"
+                      onchange="addLiveNote('northside', this)"
+                    ></textarea>
                   </div>
                 </div>
 
@@ -4193,7 +4249,7 @@
               <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Subject</label>
               <input
                 type="text"
-                value="Meeting recap · Public safety, taxes, and Northside"
+                value="Town Hall recap · Public safety, taxes, and Northside"
                 class="draft-input mt-1.5"
               />
             </div>
@@ -4883,7 +4939,7 @@ District 3</textarea>
               <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Subject</label>
               <input
                 type="text"
-                value="Meeting recap · Public safety, taxes, and Northside"
+                value="Town Hall recap · Public safety, taxes, and Northside"
                 class="draft-input mt-1.5"
               />
             </div>
@@ -5229,7 +5285,7 @@ District 3</div>
               Briefings
             </button>
 
-            <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Tuesday, April 14 · Regular meeting</p>
+            <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Tuesday, April 14 · Town Hall</p>
             <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">Past recap</h1>
             <p class="text-sm mb-4" style="color: var(--gp-text-subtle);">Sent April 15 · 1,184 residents · 8 replies</p>
 
@@ -5265,7 +5321,7 @@ District 3</div>
               Briefings
             </button>
 
-            <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Tuesday, March 31 · Regular meeting</p>
+            <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Tuesday, March 31 · Town Hall</p>
             <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">No recap sent</h1>
             <p class="text-sm mb-4" style="color: var(--gp-text-subtle);">You attended this meeting but didn't send a constituent recap. The agenda covered the Northside framework first reading and the FY26 close-out.</p>
 
