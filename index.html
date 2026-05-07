@@ -450,6 +450,16 @@
       border-color: var(--gp-primary);
       box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
     }
+    .briefing-priorities {
+      list-style: disc;
+      padding-left: 18px;
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--gp-text-primary);
+    }
+    .briefing-priorities li { padding: 1px 0; }
+    .briefing-priorities li::marker { color: var(--gp-text-muted); }
 
     /* ---------- Expandable issue card (briefing detail) ---------- */
     .briefing-issue {
@@ -1129,7 +1139,6 @@
       transition: background 120ms ease;
     }
     .agenda-item:hover { background: var(--gp-surface-muted); }
-    .agenda-item.starred:hover { background: #FFF7E6; }
     .agenda-item:first-child { border-top: none; }
     .agenda-item::before {
       content: "";
@@ -1138,10 +1147,6 @@
       text-align: center;
       font-size: 12px;
       padding-top: 2px;
-    }
-    .agenda-item.starred::before {
-      content: "\2605";
-      color: #D97706;
     }
     .agenda-item .num {
       grid-column: 2;
@@ -1165,7 +1170,6 @@
       display: none;
     }
     .agenda-item.is-expanded .agenda-item-desc { display: block; }
-    .agenda-item.starred { background: #FFFBEB; }
     .agenda-item .star { display: none; }
     .agenda-item .your-priority {
       display: inline-block;
@@ -3460,47 +3464,34 @@
                   <span class="dmonth">May</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="priority-chip badge-upcoming">Upcoming</span>
-                    <span class="text-xs" style="color: var(--gp-text-muted);">3 priorities</span>
-                  </div>
-                  <h3 class="text-base font-semibold mt-1.5" style="color: var(--gp-text-primary);">Town Hall</h3>
-                  <p class="text-xs mt-1 flex items-center gap-1.5" style="color: var(--gp-success);">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                    <span style="color: var(--gp-success); font-weight: 500;">Briefing ready</span>
-                  </p>
+                  <ul class="briefing-priorities">
+                    <li>Public safety camera expansion</li>
+                    <li>FY2027 property tax rate</li>
+                    <li>Northside revitalization</li>
+                  </ul>
                 </div>
               </button>
             </div>
 
             <!-- Just happened (POST) -->
             <div data-when="post">
-              <p class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--gp-text-muted);">Just happened</p>
-              <button id="briefingsPostRow" class="event-row mb-4 w-full" onclick="goToMeetingPostState()" style="border-color: #FFD78A; background: #FFF7E6;">
-                <div id="briefingsPostChipDay" class="day-chip" style="background: #FEF3C7; border-color: #FFD78A;">
-                  <span class="dnum" style="color: #92400E;">12</span>
-                  <span class="dmonth" style="color: #92400E;">May</span>
+              <button id="briefingsPostRow" class="event-row mb-4 w-full" onclick="goToMeetingPostState()">
+                <div id="briefingsPostChipDay" class="day-chip">
+                  <span class="dnum">12</span>
+                  <span class="dmonth">May</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="just-happened-pill">
-                      <span class="pulse-dot"></span>
-                      Tonight
-                    </span>
-                    <span class="text-xs" style="color: var(--gp-text-muted);">3 priorities</span>
-                  </div>
-                  <h3 class="text-base font-semibold mt-1.5" style="color: var(--gp-text-primary);">Town Hall</h3>
-                  <p id="briefingsPostRowMeta" class="text-xs mt-1"><span style="color: #92400E; font-weight: 600;">Wrapped 2 hours ago · Recap pending</span></p>
+                  <ul class="briefing-priorities">
+                    <li>Public safety camera expansion</li>
+                    <li>FY2027 property tax rate</li>
+                    <li>Northside revitalization</li>
+                  </ul>
                 </div>
               </button>
             </div>
 
             <div class="divider"></div>
 
-            <!-- Past -->
-            <p class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--gp-text-muted);">Past</p>
             <div class="space-y-2">
 
               <button class="event-row" onclick="goToScreen('past-recap-apr28')">
@@ -3509,11 +3500,11 @@
                   <span class="dmonth">Apr</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-xs" style="color: var(--gp-text-muted);">Town Hall</span>
-                  </div>
-                  <h3 class="text-sm font-semibold mt-1.5" style="color: var(--gp-text-primary);">Recap sent · 12 replies</h3>
-                  <p class="text-xs mt-0.5" style="color: var(--gp-text-subtle);">Cameras vote, budget workshop, library hours</p>
+                  <ul class="briefing-priorities">
+                    <li>Cameras vote</li>
+                    <li>Budget workshop</li>
+                    <li>Library hours</li>
+                  </ul>
                 </div>
               </button>
 
@@ -3523,11 +3514,11 @@
                   <span class="dmonth">Apr</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-xs" style="color: var(--gp-text-muted);">Town Hall</span>
-                  </div>
-                  <h3 class="text-sm font-semibold mt-1.5" style="color: var(--gp-text-primary);">Recap sent · 8 replies</h3>
-                  <p class="text-xs mt-0.5" style="color: var(--gp-text-subtle);">Stormwater, road resurfacing, downtown lighting</p>
+                  <ul class="briefing-priorities">
+                    <li>Stormwater</li>
+                    <li>Road resurfacing</li>
+                    <li>Downtown lighting</li>
+                  </ul>
                 </div>
               </button>
 
@@ -3537,11 +3528,10 @@
                   <span class="dmonth">Mar</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-xs" style="color: var(--gp-text-muted);">Town Hall</span>
-                  </div>
-                  <h3 class="text-sm font-semibold mt-1.5" style="color: var(--gp-text-primary);">No recap sent</h3>
-                  <p class="text-xs mt-0.5" style="color: var(--gp-text-subtle);">Northside framework, FY26 close-out</p>
+                  <ul class="briefing-priorities">
+                    <li>Northside framework</li>
+                    <li>FY26 close-out</li>
+                  </ul>
                 </div>
               </button>
 
