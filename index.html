@@ -1128,9 +1128,13 @@
     }
     .agenda-item:hover { background: var(--gp-surface-muted); }
     .agenda-item.starred:hover { background: #FFF7E6; }
+    .agenda-item > span:not(.num):not(.star) {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
     .agenda-item-desc {
       flex-basis: 100%;
-      padding-left: 22px;
+      padding-left: 54px;
       margin-top: 6px;
       font-size: 12px;
       color: var(--gp-text-muted);
@@ -1138,6 +1142,9 @@
       display: none;
     }
     .agenda-item.is-expanded .agenda-item-desc { display: block; }
+    .agenda-item .your-priority {
+      flex-shrink: 0;
+    }
     .agenda-item:first-child { border-top: none; }
     .agenda-item::before {
       content: "";
