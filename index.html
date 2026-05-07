@@ -1114,43 +1114,26 @@
       animation: expand 240ms ease-out;
     }
     .agenda-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 12px 22px 1fr;
+      column-gap: 10px;
+      row-gap: 6px;
+      align-items: start;
       padding: 10px 16px;
       border-top: 1px solid var(--gp-border-subtle);
       font-size: 13px;
       color: var(--gp-text-primary);
       line-height: 1.5;
       cursor: pointer;
-      flex-wrap: wrap;
       transition: background 120ms ease;
     }
     .agenda-item:hover { background: var(--gp-surface-muted); }
     .agenda-item.starred:hover { background: #FFF7E6; }
-    .agenda-item > span:not(.num):not(.star) {
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-    .agenda-item-desc {
-      flex-basis: 100%;
-      padding-left: 54px;
-      margin-top: 6px;
-      font-size: 12px;
-      color: var(--gp-text-muted);
-      line-height: 1.5;
-      display: none;
-    }
-    .agenda-item.is-expanded .agenda-item-desc { display: block; }
-    .agenda-item .your-priority {
-      flex-shrink: 0;
-    }
     .agenda-item:first-child { border-top: none; }
     .agenda-item::before {
       content: "";
-      display: inline-block;
-      width: 12px;
-      flex-shrink: 0;
+      grid-column: 1;
+      grid-row: 1;
       text-align: center;
       font-size: 12px;
       padding-top: 2px;
@@ -1160,16 +1143,28 @@
       color: #D97706;
     }
     .agenda-item .num {
-      flex-shrink: 0;
-      width: 22px;
+      grid-column: 2;
+      grid-row: 1;
       font-weight: 600;
       color: var(--gp-text-muted);
       font-size: 12px;
       padding-top: 1px;
     }
-    .agenda-item.starred {
-      background: #FFFBEB;
+    .agenda-item > span:not(.num):not(.star) {
+      grid-column: 3;
+      grid-row: 1;
+      min-width: 0;
     }
+    .agenda-item-desc {
+      grid-column: 3;
+      grid-row: 2;
+      font-size: 12px;
+      color: var(--gp-text-muted);
+      line-height: 1.5;
+      display: none;
+    }
+    .agenda-item.is-expanded .agenda-item-desc { display: block; }
+    .agenda-item.starred { background: #FFFBEB; }
     .agenda-item .star { display: none; }
     .agenda-item .your-priority {
       display: inline-block;
