@@ -2548,11 +2548,19 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      width: 100%;
       padding: 12px 0;
+      margin: 0;
+      border: 0;
       border-bottom: 1px solid var(--gp-border-subtle);
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
       cursor: pointer;
       transition: background 120ms ease;
     }
+    .alt-row:last-of-type { border-bottom: 0; }
     .alt-row:hover { background: var(--gp-surface-subtle); }
     .alt-row .alt-meta {
       flex: 1;
@@ -2587,11 +2595,12 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 9999px;
+      background: #EAF2FF;
       transition: background 120ms ease;
     }
-    .alt-row:hover .alt-swap { background: #EAF2FF; }
+    .alt-row:hover .alt-swap { background: #DBEAFE; }
 
     .swap-picker {
       background: #FFFFFF;
@@ -2648,6 +2657,24 @@
       font-size: 11px;
       font-weight: 600;
       flex-shrink: 0;
+    }
+    .swap-picker .sp-divider {
+      height: 1px;
+      background: var(--gp-border-subtle);
+      margin: 8px 2px 6px 2px;
+    }
+    .swap-picker .sp-option.is-add {
+      background: #FFFFFF;
+      border-style: dashed;
+      color: var(--gp-primary);
+    }
+    .swap-picker .sp-option.is-add:hover {
+      background: #EAF2FF;
+      border-style: solid;
+    }
+    .swap-picker .sp-option.is-add .sp-rank {
+      background: #EAF2FF;
+      color: var(--gp-primary);
     }
     .swap-picker .sp-cancel {
       width: 100%;
@@ -3879,7 +3906,7 @@
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                 </svg>
               </span>
-              <p><strong>Your three priorities for tonight</strong></p>
+              <p id="pickRationaleLine">These are your <span id="pickRationaleCount">three</span> priorities for tonight based on what you ran on.</p>
             </div>
 
             <!-- TOP 3 ISSUES (35% segment, Document mode only) -->
@@ -4261,12 +4288,12 @@
                 <line x1="12" y1="8" x2="12" y2="12"/>
                 <line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              <span><strong>Built from</strong> your briefing and your three priorities.</span>
+              <span><strong>Built from</strong> your briefing and your <span id="compFingerprintCount">three</span> priorities.</span>
             </div>
 
             <p class="text-xs font-semibold uppercase tracking-wider mt-2" style="color: var(--gp-text-muted);">Pre-meeting message, draft</p>
-            <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">Tell your constituents what's happening tonight</h1>
-            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);">Drafted from your briefing and your three priorities. Edit anything, choose who and when, then send.</p>
+            <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">Send an update before tonight's Town Hall</h1>
+            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);">Drafted from your briefing and your priorities. Edit anything, choose who hears from you and when, then send.</p>
 
             <!-- AUDIENCE selector -->
             <div class="selector-row mb-3" id="composedAudienceSelector">
@@ -4389,7 +4416,7 @@
               <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Subject</label>
               <input
                 type="text"
-                value="What's coming up at tonight's Town Hall"
+                value="Tonight at the Town Hall, three things to flag"
                 class="draft-input mt-1.5"
               />
             </div>
@@ -4412,7 +4439,7 @@ Reach out before the meeting if you have questions or want me to raise something
 
 Renee Wells
 District 3</textarea>
-              <p class="text-xs mt-2" style="color: var(--gp-text-muted);">Drafted in 4 seconds from your briefing and your three priorities.</p>
+              <p class="text-xs mt-2" style="color: var(--gp-text-muted);">Drafted in 4 seconds from your briefing and your priorities.</p>
             </div>
 
             <!-- AUTOMATE -->
@@ -5151,10 +5178,10 @@ District 3</textarea>
               </div>
             </div>
 
-            <div class="automate-row w-full mb-6 text-left">
+            <div class="automate-row w-full mb-6 text-left" id="recapSentAutomate">
               <div class="flex-1">
-                <p class="text-sm font-semibold" style="color: var(--gp-text-primary);">Automate next time?</p>
-                <p class="text-xs mt-1" style="color: var(--gp-text-subtle); line-height: 1.5;">When this is on, after your meeting we'll draft and queue up a recap automatically. You'll just need to approve.</p>
+                <p class="text-sm font-semibold" style="color: var(--gp-text-primary);" id="recapSentAutomateTitle">Automate next time?</p>
+                <p class="text-xs mt-1" style="color: var(--gp-text-subtle); line-height: 1.5;" id="recapSentAutomateBody">When this is on, after your meeting we'll draft and queue up a recap automatically. You'll just need to approve.</p>
               </div>
               <label class="switch">
                 <input type="checkbox" id="automateToggleSent" onchange="syncAutomatePref(this.checked)" />
@@ -5816,7 +5843,7 @@ District 3</div>
     'recap-loading': 'Drafting',
     'recap-draft': 'Recap draft',
     'recap-sent': 'Sent',
-    'recap-stats': 'Recap stats',
+    'recap-stats': 'Message stats',
     'past-recap-apr28': 'Past recap',
     'past-recap-apr14': 'Past recap',
     'past-recap-mar31': 'Past recap',
@@ -5980,35 +6007,137 @@ District 3</div>
   }
 
   // ---- Swap UX (inline picker under tapped alternative) ----
+  // Priorities are dynamic. Default load is three (cameras, tax, northside),
+  // but the EO can REPLACE one of them or ADD an alternative as a brand-new
+  // priority, growing the list.
+
+  const altCopy = {
+    stormwater: {
+      title: 'Stormwater fee schedule update',
+      why: 'Northside flooding ties this to the top issue you ran on. Fee adjustment up 12% over 3 years.',
+      whatIs: 'Council reviews a fee-schedule update for stormwater services. 12% increase phased over 3 years to fund culvert repair.',
+      whatSay: 'Northside residents flag flooding most often in your last poll. 71% support paying for fixes if Northside is prioritized.',
+      recPos: 'Vote YES on the fee schedule, conditioned on Northside culverts being in Phase 1 work.',
+      ideal: 'Northside culverts funded in year one with public progress reports each quarter.'
+    },
+    library: {
+      title: 'Library hours pilot results',
+      why: 'Constituent service touchpoint. 6-month evening pilot showed 28% attendance growth.',
+      whatIs: 'Pilot extended library hours Mon–Thu evenings. 6-month results: attendance up 28%, with strongest growth in teen programming.',
+      whatSay: 'Library access ranked in the top 5 quality-of-life concerns from your March outreach.',
+      recPos: 'Make the extended hours permanent and ask staff to scope a Saturday extension.',
+      ideal: 'Permanent extended hours with a small additional pilot for Saturday teen study programming.'
+    },
+    riverside: {
+      title: 'Riverside Ave traffic calming study',
+      why: 'Public safety adjacency, 2 fatal accidents in 18 months. Four design options on the table.',
+      whatIs: 'Staff presents 4 traffic-calming designs for Riverside Ave: speed table, road diet, signal change, or curb extensions.',
+      whatSay: 'Public safety is your top campaign issue. Riverside is mentioned by name in 9 recent constituent emails.',
+      recPos: 'Direct staff to advance the road diet and curb extension combo for design review.',
+      ideal: 'Construction begins by FY27 with a public safety scorecard tracking outcomes.'
+    },
+    parkave: {
+      title: 'Park Ave resurfacing schedule',
+      why: 'May 15 to May 22, with detour through Northside. Coordinate constituent communication.',
+      whatIs: 'Park Ave resurfacing scheduled May 15–22. Detour routed through Northside. Staff briefing on traffic and access plan.',
+      whatSay: 'Northside residents are sensitive to detour traffic from past projects. Last poll showed 62% want advance notice over a week ahead.',
+      recPos: 'Approve the schedule and require constituent notice 10 days before work starts.',
+      ideal: 'Detour stays under 5 days with weekend pause and clear before/after photos shared with the neighborhood.'
+    },
+    planning: {
+      title: 'Planning Board, two vacancies',
+      why: 'You nominated one of three applicants in March. Vote tonight on confirmations.',
+      whatIs: 'Two vacancies on Planning Board. Three applicants. Vote tonight on confirmations.',
+      whatSay: 'Constituents you spoke with in March asked for stronger neighborhood representation on Planning Board.',
+      recPos: 'Confirm the two applicants who live in the affected wards and note the third for a future opening.',
+      ideal: 'Both confirmed seats are residents of high-impact neighborhoods, with public follow-up on first-year priorities.'
+    },
+    capital: {
+      title: 'Quarterly capital projects report',
+      why: '14 active projects, 2 over budget by 8% combined. Discussion only.',
+      whatIs: 'Quarterly report on 14 active capital projects. Two are over budget by a combined 8%. Discussion only, no vote.',
+      whatSay: 'Constituents who care about taxes also flag fiscal accountability. 58% want to see budget overruns explained publicly.',
+      recPos: 'Press staff for written explanation on the two over-budget projects and a corrective plan by next quarter.',
+      ideal: 'Public dashboard with current status of every active capital project, refreshed monthly.'
+    },
+    manager: {
+      title: 'Update from the Town Manager',
+      why: 'Hiring, contracts, intergovernmental. Routine but worth tracking.',
+      whatIs: 'Routine update from the Town Manager covering hiring pace, key contracts, and intergovernmental coordination.',
+      whatSay: 'Constituents rarely surface this directly, but it shapes how every other priority gets executed.',
+      recPos: 'Listen and note any items that intersect with your three priorities, ask follow-ups in writing.',
+      ideal: 'Town Manager updates surface staffing or contracting bottlenecks early enough to act on them.'
+    }
+  };
+
+  function priorityWordFor(n) {
+    const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+    return words[n] || String(n);
+  }
+
+  function getOrderedPriorities() {
+    return Array.from(document.querySelectorAll('#topIssuesContainer .loop-issue'));
+  }
+
+  function refreshPriorityCount() {
+    const list = getOrderedPriorities();
+    const n = list.length;
+    const word = priorityWordFor(n);
+
+    // 1. Update each priority's rank chip ("Priority one, Item N")
+    list.forEach((el, idx) => {
+      const rankEl = el.querySelector('.issue-rank span:last-child');
+      if (!rankEl) return;
+      const current = rankEl.textContent || '';
+      const itemMatch = current.match(/Item\s+\S+/);
+      const itemSuffix = itemMatch ? `, ${itemMatch[0]}` : '';
+      rankEl.textContent = `Priority ${priorityWordFor(idx + 1)}${itemSuffix}`;
+    });
+
+    // 2. Update the rationale line "These are your N priorities..."
+    const countEl = document.getElementById('pickRationaleCount');
+    if (countEl) countEl.textContent = word;
+
+    // 3. Update the alt-list-header "swap into your N priorities"
+    document.querySelectorAll('.alt-list-header').forEach(p => {
+      p.innerHTML = p.innerHTML.replace(/swap into your \w+ priorities/i, `swap into your ${word} priorities`);
+    });
+  }
+
   let activeSwapPicker = null;
   function openSwap(altKey, btn) {
     closeSwapPicker();
-    const titles = {
-      stormwater: 'Stormwater fee schedule update',
-      library: 'Library hours pilot results',
-      riverside: 'Riverside Ave traffic calming study',
-      parkave: 'Park Ave resurfacing schedule',
-      planning: 'Planning Board, two vacancies',
-      capital: 'Quarterly capital projects report',
-      manager: 'Update from the Town Manager'
-    };
-    const altTitle = titles[altKey] || 'this item';
+    const meta = altCopy[altKey] || { title: 'this item' };
+    const altTitle = meta.title;
+    const priorities = getOrderedPriorities().map(el => {
+      const rank = el.querySelector('.issue-rank span:last-child');
+      const h2 = el.querySelector('h2');
+      const rankText = (rank && rank.textContent) ? rank.textContent.split(',')[0].trim() : 'Priority';
+      const titleText = h2 ? h2.textContent : '';
+      return {
+        key: el.getAttribute('data-issue'),
+        rank: rankText,
+        title: titleText
+      };
+    });
+
+    const replaceOptionsHTML = priorities.map((p, idx) => `
+      <button class="sp-option" data-replace="${p.key}">
+        <span class="sp-rank">${idx + 1}</span>
+        <span><strong>Replace ${p.rank.toLowerCase()}</strong> · ${p.title}</span>
+      </button>
+    `).join('');
+
     const picker = document.createElement('div');
     picker.className = 'swap-picker';
     picker.innerHTML = `
-      <p class="sp-label">Swap <strong>${altTitle}</strong> into Priority one, two, or three?</p>
+      <p class="sp-label">Swap <strong>${altTitle}</strong> in?</p>
       <div class="sp-options">
-        <button class="sp-option" data-replace="cameras">
-          <span class="sp-rank">1</span>
-          <span><strong>Priority one</strong> · Public safety camera expansion</span>
-        </button>
-        <button class="sp-option" data-replace="tax">
-          <span class="sp-rank">2</span>
-          <span><strong>Priority two</strong> · FY27 property tax rate</span>
-        </button>
-        <button class="sp-option" data-replace="northside">
-          <span class="sp-rank">3</span>
-          <span><strong>Priority three</strong> · Northside revitalization</span>
+        ${replaceOptionsHTML}
+        <div class="sp-divider" aria-hidden="true"></div>
+        <button class="sp-option is-add" data-add="true">
+          <span class="sp-rank">+</span>
+          <span><strong>Add as new priority</strong> · keep your current ${priorityWordFor(priorities.length)}</span>
         </button>
       </div>
       <button class="sp-cancel">Cancel</button>
@@ -6017,8 +6146,11 @@ District 3</div>
     activeSwapPicker = picker;
     picker.querySelectorAll('.sp-option').forEach(o => {
       o.addEventListener('click', () => {
-        const replace = o.dataset.replace;
-        executeSwap(altKey, replace, altTitle);
+        if (o.dataset.add === 'true') {
+          executeAdd(altKey, altTitle);
+        } else {
+          executeSwap(altKey, o.dataset.replace, altTitle);
+        }
       });
     });
     picker.querySelector('.sp-cancel').addEventListener('click', closeSwapPicker);
@@ -6031,64 +6163,114 @@ District 3</div>
     activeSwapPicker = null;
   }
 
+  function hideAltRow(altKey) {
+    document.querySelectorAll('.alt-row').forEach(r => {
+      const on = r.getAttribute('onclick') || '';
+      if (on.includes(`'${altKey}'`)) r.style.display = 'none';
+    });
+  }
+
   function executeSwap(altKey, replaceKey, altTitle) {
     closeSwapPicker();
-    // Find the replaced issue and rewrite its title and rank label.
-    // For prototype fidelity we update copy in place, briefing content stays
-    // illustrative since this is a swap demo.
     const replaced = document.querySelector(`.loop-issue[data-issue="${replaceKey}"]`);
     if (replaced) {
       const h2 = replaced.querySelector('h2');
       const why = replaced.querySelector('.issue-why');
-      const rank = replaced.querySelector('.issue-rank span:last-child');
-      const altCopy = {
-        stormwater: {
-          title: 'Stormwater fee schedule update',
-          why: 'Northside flooding ties this to the top issue you ran on. Fee adjustment up 12% over 3 years.'
-        },
-        library: {
-          title: 'Library hours pilot results',
-          why: 'Constituent service touchpoint. 6-month evening pilot showed 28% attendance growth.'
-        },
-        riverside: {
-          title: 'Riverside Ave traffic calming study',
-          why: 'Public safety adjacency, 2 fatal accidents in 18 months. Four design options on the table.'
-        },
-        parkave: {
-          title: 'Park Ave resurfacing schedule',
-          why: 'May 15 to May 22, with detour through Northside. Coordinate constituent communication.'
-        },
-        planning: {
-          title: 'Planning Board, two vacancies',
-          why: 'You nominated one of three applicants in March. Vote tonight on confirmations.'
-        },
-        capital: {
-          title: 'Quarterly capital projects report',
-          why: '14 active projects, 2 over budget by 8% combined. Discussion only.'
-        },
-        manager: {
-          title: 'Update from the Town Manager',
-          why: 'Hiring, contracts, intergovernmental. Routine but worth tracking.'
-        }
-      };
       const data = altCopy[altKey];
       if (data && h2 && why) {
         h2.textContent = data.title;
         why.textContent = data.why;
       }
-      // Mark issue key swap so position log/composition still works
       replaced.setAttribute('data-issue', altKey);
       replaced.querySelectorAll('.position-toggle').forEach(t => t.setAttribute('data-issue', altKey));
       const ts = replaced.querySelector('[data-pos-ts]');
       if (ts) ts.setAttribute('data-pos-ts', altKey);
     }
-    // Hide the now-used alt row.
-    const altRows = document.querySelectorAll('.alt-row');
-    altRows.forEach(r => {
-      const on = r.getAttribute('onclick') || '';
-      if (on.includes(`'${altKey}'`)) r.style.display = 'none';
-    });
-    showToast(`Swapped in: ${altTitle}`);
+    hideAltRow(altKey);
+    refreshPriorityCount();
+    showToast(`Swapped in, ${altTitle}`);
+  }
+
+  function executeAdd(altKey, altTitle) {
+    closeSwapPicker();
+    const container = document.getElementById('topIssuesContainer');
+    if (!container) return;
+    const data = altCopy[altKey];
+    if (!data) return;
+
+    const existingCount = getOrderedPriorities().length;
+    const newRankNum = existingCount + 1;
+    const newRankWord = priorityWordFor(newRankNum);
+
+    // Add separator before the new article (matches existing rule between issues)
+    const rule = document.createElement('hr');
+    rule.className = 'doc-rule';
+    container.appendChild(rule);
+
+    const article = document.createElement('article');
+    article.className = 'loop-issue';
+    article.setAttribute('data-issue', altKey);
+    article.innerHTML = `
+      <div class="issue-rank"><span class="rank-dot"></span><span>Priority ${newRankWord}</span></div>
+      <h2>${data.title}</h2>
+      <p class="issue-why">${data.why}</p>
+
+      <div class="issue-section">
+        <p class="label">What is it</p>
+        <p>${data.whatIs}</p>
+      </div>
+
+      <div class="issue-section">
+        <p class="label">What constituents say</p>
+        <p>${data.whatSay}</p>
+      </div>
+
+      <div class="issue-section">
+        <p class="label">Recommended position</p>
+        <p>${data.recPos}</p>
+      </div>
+
+      <div class="issue-section">
+        <p class="label">Ideal outcome</p>
+        <p class="subtle">${data.ideal}</p>
+      </div>
+
+      <div class="position-row">
+        <div class="position-label">
+          <span>Your position</span>
+          <span class="ts" data-pos-ts="${altKey}"></span>
+        </div>
+        <div class="position-toggle mode-only-document" data-issue="${altKey}">
+          <button data-pos="yes" onclick="setPosition('${altKey}', 'yes', this)">Yes</button>
+          <button data-pos="no" onclick="setPosition('${altKey}', 'no', this)">No</button>
+          <button data-pos="abstain" onclick="setPosition('${altKey}', 'abstain', this)">Abstain</button>
+          <button data-pos="undecided" onclick="setPosition('${altKey}', 'undecided', this)">Undecided</button>
+        </div>
+        <div class="position-toggle live mode-only-live" data-issue="${altKey}">
+          <button data-pos="yes" onclick="setPosition('${altKey}', 'yes', this)">Yes</button>
+          <button data-pos="no" onclick="setPosition('${altKey}', 'no', this)">No</button>
+          <button data-pos="abstain" onclick="setPosition('${altKey}', 'abstain', this)">Abstain</button>
+          <button data-pos="undecided" onclick="setPosition('${altKey}', 'undecided', this)">Undecided</button>
+        </div>
+        <div class="mode-only-document">
+          <label class="doc-note-label" for="doc-notes-${altKey}">Notes for this item</label>
+          <textarea
+            id="doc-notes-${altKey}"
+            class="doc-note"
+            data-issue="${altKey}"
+            placeholder="Add a note for this issue."
+            onchange="addLiveNote('${altKey}', this)"
+          ></textarea>
+        </div>
+      </div>
+    `;
+    container.appendChild(article);
+    if (!positionLog[altKey]) positionLog[altKey] = [];
+    if (!liveNotes[altKey]) liveNotes[altKey] = [];
+
+    hideAltRow(altKey);
+    refreshPriorityCount();
+    showToast(`Added as new priority, ${altTitle}`);
   }
 
   // ---- Live mode: capture notes ----
@@ -6126,6 +6308,11 @@ District 3</div>
     const nc = document.getElementById('recapNoteCount');
     if (pc) pc.textContent = displayPos;
     if (nc) nc.textContent = displayNotes;
+
+    // Sync the composition fingerprint with the live priority count
+    const fingerCount = document.getElementById('compFingerprintCount');
+    if (fingerCount) fingerCount.textContent = priorityWordFor(getOrderedPriorities().length);
+
     goToScreen('composed-recap');
   }
 
@@ -7227,10 +7414,29 @@ District 3</div>
     const sentBody = document.getElementById('sentScreenBody');
     if (sentTitle) sentTitle.textContent = 'Pre-meeting message sent';
     if (sentBody) sentBody.innerHTML = 'Your pre-meeting message is on its way to <span style="color: var(--gp-text-primary); font-weight: 500;" id="sentAudienceCount">' + recipientPhrase + '</span>. Replies will start coming back within an hour.';
+    const sentAutoTitle = document.getElementById('recapSentAutomateTitle');
+    const sentAutoBody = document.getElementById('recapSentAutomateBody');
+    if (sentAutoTitle) sentAutoTitle.textContent = 'Send pre-meeting updates automatically?';
+    if (sentAutoBody) sentAutoBody.textContent = 'When this is on, before every Town Hall we will draft a pre-meeting message from your briefing. You only need to approve before it sends.';
+
     const eyebrow = document.getElementById('statsEyebrow');
-    if (eyebrow) eyebrow.textContent = 'Pre-meeting message sent · May 6';
+    if (eyebrow) eyebrow.textContent = 'Pre-meeting message sent · May 12';
+    const statsH1 = document.querySelector('[data-screen="recap-stats"] h1');
+    if (statsH1) statsH1.textContent = 'How your pre-meeting message landed';
     const ts = document.getElementById('statsTimestamp');
-    if (ts) ts.innerHTML = '9:42 AM · Sent to <span id="statsRecipients">' + recipientLabel + '</span>';
+    if (ts) ts.innerHTML = '8:00 AM · Sent to <span id="statsRecipients">' + recipientLabel + '</span>';
+
+    // Swap "What you sent" body to the pre-meeting message
+    const composedBody = document.getElementById('composedBody');
+    const sentBodyBlock = document.getElementById('recapStatsSentBody');
+    if (composedBody && sentBodyBlock) {
+      sentBodyBlock.textContent = composedBody.value;
+    }
+    // Flip the trailing helper that says "Sent to ... at 9:42 PM"
+    const trailingHelper = sentBodyBlock && sentBodyBlock.parentElement ? sentBodyBlock.parentElement.querySelector('p.text-xs') : null;
+    if (trailingHelper) {
+      trailingHelper.innerHTML = 'Sent to <span id="recapStatsRecipients">' + recipientLabel + '</span> at 8:00 AM, before tonight\'s Town Hall. <button class="text-xs font-medium" style="color: var(--gp-primary); background: transparent; border: 0; padding: 0;" onclick="goToScreen(\'composed-recap\')">Edit and resend &rarr;</button>';
+    }
 
     document.querySelectorAll('#repliesFeed .reply-row').forEach(r => r.classList.remove('selected'));
     if (typeof refreshFollowUpCTA === 'function') refreshFollowUpCTA();
@@ -7325,10 +7531,25 @@ District 3</div>
     const sentBody = document.getElementById('sentScreenBody');
     if (sentTitle) sentTitle.textContent = 'Sent';
     if (sentBody) sentBody.innerHTML = 'Your recap is on its way to <span style="color: var(--gp-text-primary); font-weight: 500;" id="sentAudienceCount">' + recipientPhrase + '</span>. Replies will start coming back within an hour.';
+    const sentAutoTitle = document.getElementById('recapSentAutomateTitle');
+    const sentAutoBody = document.getElementById('recapSentAutomateBody');
+    if (sentAutoTitle) sentAutoTitle.textContent = 'Automate next time?';
+    if (sentAutoBody) sentAutoBody.textContent = 'When this is on, after your meeting we will draft and queue up a recap automatically. You only need to approve.';
     const eyebrow = document.getElementById('statsEyebrow');
     if (eyebrow) eyebrow.textContent = 'Recap sent · May 12';
+    const statsH1 = document.querySelector('[data-screen="recap-stats"] h1');
+    if (statsH1) statsH1.textContent = 'How it landed';
     const ts = document.getElementById('statsTimestamp');
     if (ts) ts.innerHTML = '9:42 PM · Sent to <span id="statsRecipients">' + recipientLabel + '</span>';
+
+    // Sync the "What you sent" display in recap-stats with the post-meeting body
+    const postBody = document.getElementById('postMeetingBody');
+    const sentBodyBlock = document.getElementById('recapStatsSentBody');
+    if (postBody && sentBodyBlock) sentBodyBlock.textContent = postBody.value;
+    const trailingHelper = sentBodyBlock && sentBodyBlock.parentElement ? sentBodyBlock.parentElement.querySelector('p.text-xs') : null;
+    if (trailingHelper) {
+      trailingHelper.innerHTML = 'Sent to <span id="recapStatsRecipients">' + recipientLabel + '</span> at 9:42 PM. <button class="text-xs font-medium" style="color: var(--gp-primary); background: transparent; border: 0; padding: 0;" onclick="goToScreen(\'recap-draft\')">Edit and resend &rarr;</button>';
+    }
 
     // Reset reply selection state on each fresh send so demo restarts cleanly
     document.querySelectorAll('#repliesFeed .reply-row').forEach(r => r.classList.remove('selected'));
