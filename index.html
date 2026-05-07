@@ -1124,6 +1124,19 @@
       line-height: 1.5;
     }
     .agenda-item:first-child { border-top: none; }
+    .agenda-item::before {
+      content: "";
+      display: inline-block;
+      width: 12px;
+      flex-shrink: 0;
+      text-align: center;
+      font-size: 12px;
+      padding-top: 2px;
+    }
+    .agenda-item.starred::before {
+      content: "\2605";
+      color: #D97706;
+    }
     .agenda-item .num {
       flex-shrink: 0;
       width: 22px;
@@ -1135,12 +1148,7 @@
     .agenda-item.starred {
       background: #FFFBEB;
     }
-    .agenda-item .star {
-      color: #D97706;
-      font-size: 12px;
-      flex-shrink: 0;
-      padding-top: 2px;
-    }
+    .agenda-item .star { display: none; }
     .agenda-item .your-priority {
       display: inline-block;
       margin-left: 6px;
