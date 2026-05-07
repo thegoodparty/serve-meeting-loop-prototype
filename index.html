@@ -426,11 +426,12 @@
       background: var(--gp-surface-subtle);
       border: 1px solid var(--gp-border-subtle);
     }
-    .day-chip .dow { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: var(--gp-text-muted); text-transform: uppercase; }
-    .day-chip .dnum { font-size: 18px; font-weight: 600; color: var(--gp-text-primary); line-height: 1.1; margin-top: 2px; }
+    .day-chip .dnum { font-size: 18px; font-weight: 600; color: var(--gp-text-primary); line-height: 1.1; }
+    .day-chip .dmonth { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: var(--gp-text-muted); text-transform: uppercase; margin-top: 2px; }
+    .day-chip .dow { display: none; }
     .day-chip.featured { background: var(--gp-primary); border-color: var(--gp-primary); }
-    .day-chip.featured .dow { color: rgba(255,255,255,0.85); }
     .day-chip.featured .dnum { color: #FFFFFF; }
+    .day-chip.featured .dmonth { color: rgba(255,255,255,0.85); }
 
     .event-row {
       display: flex;
@@ -3397,12 +3398,12 @@
               <p class="section-label mt-6 mb-2">Last meeting</p>
               <button class="event-row" onclick="goToMeetingPostState()" style="width: 100%;">
                 <div class="day-chip">
-                  <span class="dow">Tue</span>
                   <span class="dnum">12</span>
+                  <span class="dmonth">May</span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="priority-chip badge-past">Tonight · May 12</span>
+                    <span class="priority-chip badge-past">Tonight</span>
                     <span class="text-xs" style="color: var(--gp-text-muted);">3 priorities</span>
                   </div>
                   <h3 class="text-base font-semibold mt-1.5" style="color: var(--gp-text-primary);">Town Hall</h3>
@@ -3455,12 +3456,12 @@
             <div data-when="pre">
               <button class="event-row featured mb-4 w-full" onclick="goToBriefingDetail()">
                 <div class="day-chip featured">
-                  <span class="dow">Tue</span>
                   <span class="dnum">12</span>
+                  <span class="dmonth">May</span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="priority-chip badge-upcoming">Upcoming · May 12</span>
+                    <span class="priority-chip badge-upcoming">Upcoming</span>
                     <span class="text-xs" style="color: var(--gp-text-muted);">3 priorities</span>
                   </div>
                   <h3 class="text-base font-semibold mt-1.5" style="color: var(--gp-text-primary);">Town Hall</h3>
@@ -3479,8 +3480,8 @@
               <p class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--gp-text-muted);">Just happened</p>
               <button id="briefingsPostRow" class="event-row mb-4 w-full" onclick="goToMeetingPostState()" style="border-color: #FFD78A; background: #FFF7E6;">
                 <div id="briefingsPostChipDay" class="day-chip" style="background: #FEF3C7; border-color: #FFD78A;">
-                  <span class="dow" style="color: #92400E;">Tue</span>
                   <span class="dnum" style="color: #92400E;">12</span>
+                  <span class="dmonth" style="color: #92400E;">May</span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap">
@@ -3504,12 +3505,11 @@
 
               <button class="event-row" onclick="goToScreen('past-recap-apr28')">
                 <div class="day-chip">
-                  <span class="dow">Tue</span>
                   <span class="dnum">28</span>
+                  <span class="dmonth">Apr</span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="priority-chip badge-past">Apr 28</span>
                     <span class="text-xs" style="color: var(--gp-text-muted);">Town Hall</span>
                   </div>
                   <h3 class="text-sm font-semibold mt-1.5" style="color: var(--gp-text-primary);">Recap sent · 12 replies</h3>
@@ -3519,12 +3519,11 @@
 
               <button class="event-row" onclick="goToScreen('past-recap-apr14')">
                 <div class="day-chip">
-                  <span class="dow">Tue</span>
                   <span class="dnum">14</span>
+                  <span class="dmonth">Apr</span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="priority-chip badge-past">Apr 14</span>
                     <span class="text-xs" style="color: var(--gp-text-muted);">Town Hall</span>
                   </div>
                   <h3 class="text-sm font-semibold mt-1.5" style="color: var(--gp-text-primary);">Recap sent · 8 replies</h3>
@@ -3534,12 +3533,11 @@
 
               <button class="event-row" onclick="goToScreen('past-recap-mar31')">
                 <div class="day-chip">
-                  <span class="dow">Tue</span>
                   <span class="dnum">31</span>
+                  <span class="dmonth">Mar</span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <span class="priority-chip badge-past">Mar 31</span>
                     <span class="text-xs" style="color: var(--gp-text-muted);">Town Hall</span>
                   </div>
                   <h3 class="text-sm font-semibold mt-1.5" style="color: var(--gp-text-primary);">No recap sent</h3>
@@ -6423,7 +6421,7 @@ District 3</div>
       if (chip) {
         chip.style.background = '#DCFCE7';
         chip.style.borderColor = '#BBF7D0';
-        chip.querySelectorAll('.dow,.dnum').forEach(el => el.style.color = '#15803D');
+        chip.querySelectorAll('.dmonth,.dnum').forEach(el => el.style.color = '#15803D');
       }
     } else {
       // not-started or in-progress: same amber treatment
@@ -6436,7 +6434,7 @@ District 3</div>
       if (chip) {
         chip.style.background = '#FEF3C7';
         chip.style.borderColor = '#FFD78A';
-        chip.querySelectorAll('.dow,.dnum').forEach(el => el.style.color = '#92400E');
+        chip.querySelectorAll('.dmonth,.dnum').forEach(el => el.style.color = '#92400E');
       }
     }
   }
