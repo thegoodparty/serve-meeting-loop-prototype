@@ -1122,7 +1122,22 @@
       font-size: 13px;
       color: var(--gp-text-primary);
       line-height: 1.5;
+      cursor: pointer;
+      flex-wrap: wrap;
+      transition: background 120ms ease;
     }
+    .agenda-item:hover { background: var(--gp-surface-muted); }
+    .agenda-item.starred:hover { background: #FFF7E6; }
+    .agenda-item-desc {
+      flex-basis: 100%;
+      padding-left: 22px;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--gp-text-muted);
+      line-height: 1.5;
+      display: none;
+    }
+    .agenda-item.is-expanded .agenda-item-desc { display: block; }
     .agenda-item:first-child { border-top: none; }
     .agenda-item::before {
       content: "";
@@ -3931,15 +3946,15 @@
                 </span>
               </summary>
               <div class="agenda-list">
-                <div class="agenda-item"><span class="num">1.</span><span>Call to order</span></div>
-                <div class="agenda-item"><span class="num">2.</span><span>Roll call</span></div>
-                <div class="agenda-item"><span class="num">3.</span><span>Approval of minutes</span></div>
-                <div class="agenda-item"><span class="num">4.</span><span>Public comment period</span></div>
-                <div class="agenda-item"><span class="num">5.</span><span>Old business</span></div>
-                <div class="agenda-item"><span class="num">6.</span><span>New business</span></div>
-                <div class="agenda-item"><span class="num">7.</span><span>Reports from boards and commissions</span></div>
-                <div class="agenda-item"><span class="num">8.</span><span>Member announcements</span></div>
-                <div class="agenda-item"><span class="num">9.</span><span>Adjournment</span></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">1.</span><span>Call to order</span><div class="agenda-item-desc">Chair officially opens the meeting and confirms quorum.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">2.</span><span>Roll call</span><div class="agenda-item-desc">Members present and absent are recorded for the official record.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">3.</span><span>Approval of minutes</span><div class="agenda-item-desc">Vote to accept the official record of the previous meeting.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">4.</span><span>Public comment period</span><div class="agenda-item-desc">Residents address council on any topic, typically three minutes each.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">5.</span><span>Old business</span><div class="agenda-item-desc">Items carried over from previous meetings, often requiring a vote.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">6.</span><span>New business</span><div class="agenda-item-desc">Newly introduced items, may include votes or first readings.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">7.</span><span>Reports from boards and commissions</span><div class="agenda-item-desc">Liaison updates from town committees, no vote.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">8.</span><span>Member announcements</span><div class="agenda-item-desc">Council members share community events and updates.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">9.</span><span>Adjournment</span><div class="agenda-item-desc">Motion to formally end the meeting.</div></div>
               </div>
               <p style="font-size: 12px; font-style: italic; color: var(--gp-text-muted); margin: 10px 14px 14px; line-height: 1.5;">No agenda published yet. This is the standard backbone your meeting will likely follow.</p>
             </details>
@@ -4259,26 +4274,26 @@
                 </span>
               </summary>
               <div class="agenda-list">
-                <div class="agenda-item"><span class="num">1.</span><span>Call to order</span></div>
-                <div class="agenda-item"><span class="num">2.</span><span>Roll call</span></div>
-                <div class="agenda-item"><span class="num">3.</span><span>Approval of minutes, April 28</span></div>
-                <div class="agenda-item"><span class="num">4.</span><span>Public comment period</span></div>
-                <div class="agenda-item"><span class="num">5.</span><span>Proclamation, Public Works Week</span></div>
-                <div class="agenda-item"><span class="num">6.</span><span>Consent agenda, 12 items</span></div>
-                <div class="agenda-item starred"><span class="star">&#9733;</span><span class="num">7.</span><span>Resolution 2026-19, Public safety camera expansion<span class="your-priority">Priority one</span></span></div>
-                <div class="agenda-item"><span class="num">8.</span><span>Update from the Town Manager</span></div>
-                <div class="agenda-item"><span class="num">9.</span><span>Quarterly capital projects report</span></div>
-                <div class="agenda-item starred"><span class="star">&#9733;</span><span class="num">10.</span><span>Discussion, FY2027 property tax rate<span class="your-priority">Priority two</span></span></div>
-                <div class="agenda-item"><span class="num">11.</span><span>Stormwater fee schedule update</span></div>
-                <div class="agenda-item"><span class="num">12.</span><span>Library hours pilot results</span></div>
-                <div class="agenda-item starred"><span class="star">&#9733;</span><span class="num">13.</span><span>Final approval, Northside revitalization conditions<span class="your-priority">Priority three</span></span></div>
-                <div class="agenda-item"><span class="num">14.</span><span>Riverside Ave traffic calming study</span></div>
-                <div class="agenda-item"><span class="num">15.</span><span>Park Ave resurfacing schedule</span></div>
-                <div class="agenda-item"><span class="num">16.</span><span>Appointments to Planning Board, 2 vacancies</span></div>
-                <div class="agenda-item"><span class="num">17.</span><span>Annual ethics training reminder</span></div>
-                <div class="agenda-item"><span class="num">18.</span><span>Reports from boards and commissions</span></div>
-                <div class="agenda-item"><span class="num">19.</span><span>Member announcements</span></div>
-                <div class="agenda-item"><span class="num">20.</span><span>Adjournment</span></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">1.</span><span>Call to order</span><div class="agenda-item-desc">Chair officially opens the meeting and confirms quorum.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">2.</span><span>Roll call</span><div class="agenda-item-desc">Members present and absent are recorded for the official record.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">3.</span><span>Approval of minutes, April 28</span><div class="agenda-item-desc">Vote to accept the official record of the previous meeting.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">4.</span><span>Public comment period</span><div class="agenda-item-desc">Residents address council on any topic, typically three minutes each.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">5.</span><span>Proclamation, Public Works Week</span><div class="agenda-item-desc">Ceremonial recognition, no vote required.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">6.</span><span>Consent agenda, 12 items</span><div class="agenda-item-desc">Routine items voted as a single block unless pulled for discussion.</div></div>
+                <div class="agenda-item starred" onclick="toggleAgendaItem(this)"><span class="star">&#9733;</span><span class="num">7.</span><span>Resolution 2026-19, Public safety camera expansion<span class="your-priority">Priority one</span></span><div class="agenda-item-desc">Vote to expand the camera network with eight new locations across downtown and Northside.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">8.</span><span>Update from the Town Manager</span><div class="agenda-item-desc">Department updates and operational items, no vote.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">9.</span><span>Quarterly capital projects report</span><div class="agenda-item-desc">Status update on funded infrastructure projects, no vote.</div></div>
+                <div class="agenda-item starred" onclick="toggleAgendaItem(this)"><span class="star">&#9733;</span><span class="num">10.</span><span>Discussion, FY2027 property tax rate<span class="your-priority">Priority two</span></span><div class="agenda-item-desc">Council deliberates the proposed rate ahead of the May 21 first reading. No vote tonight.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">11.</span><span>Stormwater fee schedule update</span><div class="agenda-item-desc">Proposed fee adjustment for stormwater management. Vote anticipated.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">12.</span><span>Library hours pilot results</span><div class="agenda-item-desc">Outcome of the extended-hours pilot, with a staff recommendation.</div></div>
+                <div class="agenda-item starred" onclick="toggleAgendaItem(this)"><span class="star">&#9733;</span><span class="num">13.</span><span>Final approval, Northside revitalization conditions<span class="your-priority">Priority three</span></span><div class="agenda-item-desc">Final vote on the mixed-use development with affordable housing requirements.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">14.</span><span>Riverside Ave traffic calming study</span><div class="agenda-item-desc">Staff presents traffic study findings and proposed treatments.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">15.</span><span>Park Ave resurfacing schedule</span><div class="agenda-item-desc">Schedule for upcoming road resurfacing work, no vote.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">16.</span><span>Appointments to Planning Board, 2 vacancies</span><div class="agenda-item-desc">Council appoints residents to fill open Planning Board positions.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">17.</span><span>Annual ethics training reminder</span><div class="agenda-item-desc">Reminder of the required annual training deadline.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">18.</span><span>Reports from boards and commissions</span><div class="agenda-item-desc">Liaison updates from town committees, no vote.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">19.</span><span>Member announcements</span><div class="agenda-item-desc">Council members share community events and updates.</div></div>
+                <div class="agenda-item" onclick="toggleAgendaItem(this)"><span class="num">20.</span><span>Adjournment</span><div class="agenda-item-desc">Motion to formally end the meeting.</div></div>
               </div>
             </details>
 
@@ -5878,6 +5893,11 @@ District 3</div>
     } else {
       showToast('Document mode');
     }
+  }
+
+  // ---- Full agenda accordion: expand/collapse synopsis under each row ----
+  function toggleAgendaItem(el) {
+    el.classList.toggle('is-expanded');
   }
 
   // ---- Live agenda navigator: toggle inline detail panel ----
