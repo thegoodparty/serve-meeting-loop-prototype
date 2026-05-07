@@ -1372,34 +1372,32 @@
     /* ---------- Time-state toggle (prototype demo control) ---------- */
     .time-toggle-wrap {
       position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 300;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      pointer-events: auto;
+      top: 116px;
+      left: 16px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--gp-border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: 0 6px 20px -8px rgba(11, 21, 41, 0.18);
+      max-width: 220px;
     }
     .time-toggle-label {
       font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--gp-text-muted);
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(6px);
-      padding: 2px 8px;
-      border-radius: 9999px;
+      display: block;
+      margin-bottom: 6px;
     }
     .time-toggle {
-      display: inline-flex;
-      background: #FFFFFF;
-      border: 1px solid var(--gp-border);
+      display: flex;
+      gap: 4px;
+      background: var(--gp-surface-muted);
       border-radius: 9999px;
       padding: 3px;
-      box-shadow: 0 4px 12px -2px rgba(11, 21, 41, 0.10);
     }
     .time-toggle button {
       border: none;
@@ -1429,10 +1427,7 @@
     .time-toggle button.active .ts-dot { background: #FFFFFF; }
 
     @media (max-width: 500px) {
-      .time-toggle-wrap {
-        top: env(safe-area-inset-top, 4px);
-      }
-      .time-toggle-label { display: none; }
+      .time-toggle-wrap { display: none; }
     }
 
     /* Show/hide elements based on time state */
