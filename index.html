@@ -3212,36 +3212,6 @@
       .segment-toggle-wrap { display: none; }
     }
 
-    /* Prototype mode toggle row, sits directly below the segment toggle */
-    .proto-mode-toggle-wrap {
-      position: fixed;
-      top: 96px;
-      left: 16px;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--gp-border);
-      border-radius: 14px;
-      padding: 8px 12px;
-      box-shadow: 0 4px 14px -8px rgba(11, 21, 41, 0.14);
-      max-width: 220px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-    }
-    .proto-mode-toggle-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--gp-text-muted);
-      display: block;
-    }
-    @media (max-width: 500px) {
-      .proto-mode-toggle-wrap { display: none; }
-    }
-
     /* Hide segment-restricted UI when segment="65" */
     body[data-segment="65"] .seg-only-35 { display: none !important; }
     body[data-segment="35"] .seg-only-65 { display: none !important; }
@@ -3260,17 +3230,6 @@
   <div class="segment-toggle" role="tablist" aria-label="Simulated segment">
     <button id="segBtn35" class="active" onclick="setSegment('35')" aria-pressed="true">35% · With agenda</button>
     <button id="segBtn65" onclick="setSegment('65')" aria-pressed="false">65% · No agenda</button>
-  </div>
-</div>
-
-<!-- Mode toggle row, sits directly below the segment toggle. Live button hides in 65% segment. -->
-<div class="proto-mode-toggle-wrap">
-  <span class="proto-mode-toggle-label">Mode</span>
-  <div class="mode-toggle" id="modeToggle">
-    <button id="modeBtnDoc" class="active" onclick="setMode('document')" aria-pressed="true">Document</button>
-    <button id="modeBtnLive" class="seg-only-35" onclick="setMode('live')" aria-pressed="false">
-      <span class="live-dot"></span>Live
-    </button>
   </div>
 </div>
 
@@ -3575,7 +3534,7 @@
         <section class="screen" data-screen="briefing">
           <div class="loop-doc">
 
-            <!-- Back link row (mode toggle moved to the prototype demo controls, top-left) -->
+            <!-- Back link row plus mode toggle (Document / Live) -->
             <div class="flex items-center gap-3 mb-3">
               <button class="btn-text flex items-center gap-1" onclick="goToScreen('briefings')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -3584,13 +3543,18 @@
                 </svg>
                 Briefings
               </button>
+              <div class="mode-toggle" id="modeToggle" style="margin-left: auto;">
+                <button id="modeBtnDoc" class="active" onclick="setMode('document')" aria-pressed="true">Document</button>
+                <button id="modeBtnLive" class="seg-only-35" onclick="setMode('live')" aria-pressed="false">
+                  <span class="live-dot"></span>Live
+                </button>
+              </div>
             </div>
 
             <!-- Live now strip (live mode only), slim single line below the toggle -->
             <div class="mode-only-live live-now-strip">
               <span class="live-pulse"></span>
               <div class="live-text"><strong>On now</strong> · Item 7, Camera Expansion · 6:22 PM</div>
-              <button class="btn-text" style="color: rgba(255,255,255,0.85); font-size: 12px;" onclick="setMode('document')">Doc</button>
             </div>
 
             <!-- Doc header -->
