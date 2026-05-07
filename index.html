@@ -2416,21 +2416,27 @@
       font-size: 11px;
     }
     .position-toggle {
-      display: inline-flex;
-      flex-wrap: wrap;
+      display: flex;
+      flex-wrap: nowrap;
       gap: 6px;
+      width: 100%;
     }
     .position-toggle button {
+      flex: 1 1 0;
+      min-width: 0;
       border: 1px solid var(--gp-border);
       background: #FFFFFF;
       color: var(--gp-text-subtle);
       font-size: 13px;
       font-weight: 500;
-      padding: 7px 14px;
+      padding: 7px 8px;
       border-radius: 9999px;
       cursor: pointer;
       transition: all 150ms ease;
       min-height: 36px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .position-toggle.live button {
       min-height: 44px;
@@ -2460,6 +2466,37 @@
       background: #FEF3C7;
       border-color: #92400E;
       color: #92400E;
+    }
+
+    /* Document-mode position notes (mirrors live-mode .ag-note) */
+    .position-row .doc-note-label {
+      display: block;
+      font-size: 11px;
+      color: var(--gp-text-muted);
+      margin: 12px 0 6px 0;
+    }
+    .position-row .doc-note {
+      width: 100%;
+      min-height: 64px;
+      border: 1px solid var(--gp-border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--gp-text-primary);
+      background: #FFFFFF;
+      line-height: 1.5;
+      resize: vertical;
+      box-sizing: border-box;
+      transition: border-color 120ms ease, box-shadow 120ms ease;
+    }
+    .position-row .doc-note::placeholder {
+      color: var(--gp-text-muted);
+    }
+    .position-row .doc-note:focus {
+      outline: none;
+      border-color: var(--gp-primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
     /* Pick rationale strip + 7 alternatives */
@@ -2546,6 +2583,7 @@
       font-weight: 500;
       color: var(--gp-primary);
       flex-shrink: 0;
+      margin-left: auto;
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -3191,14 +3229,12 @@
             <div data-when="pre">
               <p class="section-label">Tuesday, May 6</p>
               <h1 class="text-2xl font-semibold mt-1" style="color: var(--gp-text-primary); line-height: 1.25;">Good morning, Renee</h1>
-              <p class="text-sm mt-2" style="color: var(--gp-text-subtle);">Here's what to know this week.</p>
             </div>
 
             <!-- Greeting bar (POST-MEETING) -->
             <div data-when="post">
               <p class="section-label">Tuesday, May 12</p>
               <h1 class="text-2xl font-semibold mt-1" style="color: var(--gp-text-primary); line-height: 1.25;">Good evening, Renee</h1>
-              <p class="text-sm mt-2" style="color: var(--gp-text-subtle);">The meeting just wrapped. Here's where things stand.</p>
             </div>
 
             <!-- JUST HAPPENED card (POST-MEETING, recap not yet sent) -->
@@ -3324,7 +3360,6 @@
 
             <!-- Upcoming (PRE) -->
             <div data-when="pre">
-              <p class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--gp-text-muted);">Upcoming</p>
               <button class="event-row featured mb-4 w-full" onclick="goToBriefingDetail()">
                 <div class="day-chip featured">
                   <span class="dow">Tue</span>
@@ -3758,22 +3793,97 @@
               </span>
               <p>
                 <strong>We do not have your agenda.</strong> Building from the issues you ran on and recent public records. Live mode is unavailable until an agenda is published.
-                <button class="template-link" onclick="showToast('Robert’s Rules template opened')">Use blank Robert's Rules template</button>
               </p>
             </div>
 
-            <!-- Pick rationale (Document mode only) -->
-            <div class="pick-rationale mode-only-document">
+            <!-- 65% segment, Document mode only: From your last meeting -->
+            <section class="seg-only-65 mode-only-document" style="margin: 18px 0 14px 0;">
+              <h2 style="font-size: 18px; font-weight: 600; color: var(--gp-text-primary); margin: 0 0 4px 0; letter-spacing: -0.01em;">From your last meeting</h2>
+              <p style="font-size: 13px; color: var(--gp-text-muted); margin: 0 0 14px 0;">Tuesday, Apr 28, Town Hall.</p>
+
+              <div style="background: var(--gp-surface-subtle); border: 1px solid var(--gp-border-subtle); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px;">
+                <p style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gp-text-muted); margin: 0 0 10px 0;">What was decided</p>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+                  <li style="font-size: 14px; line-height: 1.5; color: var(--gp-text-primary);">
+                    <strong style="font-weight: 600;">Public safety camera expansion.</strong> Voted Yes, with a privacy audit clause added to the contract.
+                  </li>
+                  <li style="font-size: 14px; line-height: 1.5; color: var(--gp-text-primary);">
+                    <strong style="font-weight: 600;">FY27 property tax rate.</strong> No vote. Council asked staff for project specificity before the May 21 first reading.
+                  </li>
+                  <li style="font-size: 14px; line-height: 1.5; color: var(--gp-text-primary);">
+                    <strong style="font-weight: 600;">Northside revitalization.</strong> Voted Yes on the conditions package, with the 15% affordable housing set-aside intact.
+                  </li>
+                </ul>
+              </div>
+
+              <div style="background: var(--gp-surface-subtle); border: 1px solid var(--gp-border-subtle); border-radius: 12px; padding: 14px 16px;">
+                <p style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gp-text-muted); margin: 0 0 10px 0;">What we're watching for tonight</p>
+                <ul style="list-style: none; padding: 0; margin: 0 0 10px 0; display: flex; flex-direction: column; gap: 10px;">
+                  <li style="font-size: 14px; line-height: 1.5; color: var(--gp-text-primary);">
+                    Possible follow-up on the FY27 tax rate, since you flagged this for the May 21 first reading.
+                  </li>
+                  <li style="font-size: 14px; line-height: 1.5; color: var(--gp-text-primary);">
+                    Northside development next phase, with zoning amendments that may surface.
+                  </li>
+                  <li style="font-size: 14px; line-height: 1.5; color: var(--gp-text-primary);">
+                    Standard council business: proclamations, consent agenda, and public comment.
+                  </li>
+                </ul>
+                <p style="font-size: 12px; font-style: italic; color: var(--gp-text-muted); margin: 0; line-height: 1.5;">These are forecasts, not confirmed agenda items. Once your agenda is published, this view updates with tonight's priorities.</p>
+              </div>
+            </section>
+
+            <!-- 65% segment, Document mode only: Blank Robert's Rules accordion -->
+            <details class="agenda-accordion seg-only-65 mode-only-document">
+              <summary>
+                <div class="flex items-center gap-2.5">
+                  <span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:9999px; background:var(--gp-surface-muted); color:var(--gp-text-subtle); flex-shrink:0;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="8" y1="6" x2="21" y2="6"/>
+                      <line x1="8" y1="12" x2="21" y2="12"/>
+                      <line x1="8" y1="18" x2="21" y2="18"/>
+                      <line x1="3" y1="6" x2="3.01" y2="6"/>
+                      <line x1="3" y1="12" x2="3.01" y2="12"/>
+                      <line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-sm font-semibold" style="color: var(--gp-text-primary);">Robert's Rules template</p>
+                    <p class="text-xs" style="color: var(--gp-text-muted);">Standard meeting structure, no agenda published yet</p>
+                  </div>
+                </div>
+                <span class="chev">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="agenda-list">
+                <div class="agenda-item"><span class="num">1.</span><span>Call to order</span></div>
+                <div class="agenda-item"><span class="num">2.</span><span>Roll call</span></div>
+                <div class="agenda-item"><span class="num">3.</span><span>Approval of minutes</span></div>
+                <div class="agenda-item"><span class="num">4.</span><span>Public comment period</span></div>
+                <div class="agenda-item"><span class="num">5.</span><span>Old business</span></div>
+                <div class="agenda-item"><span class="num">6.</span><span>New business</span></div>
+                <div class="agenda-item"><span class="num">7.</span><span>Reports from boards and commissions</span></div>
+                <div class="agenda-item"><span class="num">8.</span><span>Member announcements</span></div>
+                <div class="agenda-item"><span class="num">9.</span><span>Adjournment</span></div>
+              </div>
+              <p style="font-size: 12px; font-style: italic; color: var(--gp-text-muted); margin: 10px 14px 14px; line-height: 1.5;">No agenda published yet. This is the standard backbone your meeting will likely follow.</p>
+            </details>
+
+            <!-- Pick rationale (35% segment, Document mode only) -->
+            <div class="pick-rationale mode-only-document seg-only-35">
               <span class="icon">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                 </svg>
               </span>
-              <p><strong>These are your three priorities for tonight, based on what you ran on:</strong> visible safety, holding the residential tax rate, and smart growth on Northside. Tap any alternative below to swap one in.</p>
+              <p><strong>Your three priorities for tonight</strong></p>
             </div>
 
-            <!-- TOP 3 ISSUES (Document mode only) -->
-            <div id="topIssuesContainer" class="mode-only-document">
+            <!-- TOP 3 ISSUES (35% segment, Document mode only) -->
+            <div id="topIssuesContainer" class="mode-only-document seg-only-35">
 
               <!-- ISSUE: cameras -->
               <article class="loop-issue" data-issue="cameras">
@@ -3804,7 +3914,7 @@
                 <div class="position-row">
                   <div class="position-label">
                     <span>Your position</span>
-                    <span class="ts" data-pos-ts="cameras">Optional, tap to set</span>
+                    <span class="ts" data-pos-ts="cameras"></span>
                   </div>
                   <div class="position-toggle mode-only-document" data-issue="cameras">
                     <button data-pos="yes" onclick="setPosition('cameras', 'yes', this)">Yes</button>
@@ -3817,6 +3927,16 @@
                     <button data-pos="no" onclick="setPosition('cameras', 'no', this)">No</button>
                     <button data-pos="abstain" onclick="setPosition('cameras', 'abstain', this)">Abstain</button>
                     <button data-pos="undecided" onclick="setPosition('cameras', 'undecided', this)">Undecided</button>
+                  </div>
+                  <div class="mode-only-document">
+                    <label class="doc-note-label" for="doc-notes-cameras">Notes for this item</label>
+                    <textarea
+                      id="doc-notes-cameras"
+                      class="doc-note"
+                      data-issue="cameras"
+                      placeholder="Add a note for this issue."
+                      onchange="addLiveNote('cameras', this)"
+                    ></textarea>
                   </div>
                 </div>
 
@@ -3853,7 +3973,7 @@
                 <div class="position-row">
                   <div class="position-label">
                     <span>Your position</span>
-                    <span class="ts" data-pos-ts="tax">Optional, tap to set</span>
+                    <span class="ts" data-pos-ts="tax"></span>
                   </div>
                   <div class="position-toggle mode-only-document" data-issue="tax">
                     <button data-pos="yes" onclick="setPosition('tax', 'yes', this)">Support flat</button>
@@ -3866,6 +3986,16 @@
                     <button data-pos="no" onclick="setPosition('tax', 'no', this)">Oppose flat</button>
                     <button data-pos="abstain" onclick="setPosition('tax', 'abstain', this)">Abstain</button>
                     <button data-pos="undecided" onclick="setPosition('tax', 'undecided', this)">Undecided</button>
+                  </div>
+                  <div class="mode-only-document">
+                    <label class="doc-note-label" for="doc-notes-tax">Notes for this item</label>
+                    <textarea
+                      id="doc-notes-tax"
+                      class="doc-note"
+                      data-issue="tax"
+                      placeholder="Add a note for this issue."
+                      onchange="addLiveNote('tax', this)"
+                    ></textarea>
                   </div>
                 </div>
 
@@ -3902,7 +4032,7 @@
                 <div class="position-row">
                   <div class="position-label">
                     <span>Your position</span>
-                    <span class="ts" data-pos-ts="northside">Optional, tap to set</span>
+                    <span class="ts" data-pos-ts="northside"></span>
                   </div>
                   <div class="position-toggle mode-only-document" data-issue="northside">
                     <button data-pos="yes" onclick="setPosition('northside', 'yes', this)">Yes</button>
@@ -3915,6 +4045,16 @@
                     <button data-pos="no" onclick="setPosition('northside', 'no', this)">No</button>
                     <button data-pos="abstain" onclick="setPosition('northside', 'abstain', this)">Abstain</button>
                     <button data-pos="undecided" onclick="setPosition('northside', 'undecided', this)">Undecided</button>
+                  </div>
+                  <div class="mode-only-document">
+                    <label class="doc-note-label" for="doc-notes-northside">Notes for this item</label>
+                    <textarea
+                      id="doc-notes-northside"
+                      class="doc-note"
+                      data-issue="northside"
+                      placeholder="Add a note for this issue."
+                      onchange="addLiveNote('northside', this)"
+                    ></textarea>
                   </div>
                 </div>
 
@@ -4121,12 +4261,12 @@
                 <line x1="12" y1="8" x2="12" y2="12"/>
                 <line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              <span><strong>Built from</strong> your briefing, <span id="recapPosCount">0</span> position changes, and <span id="recapNoteCount">0</span> notes.</span>
+              <span><strong>Built from</strong> your briefing and your three priorities.</span>
             </div>
 
-            <p class="text-xs font-semibold uppercase tracking-wider mt-2" style="color: var(--gp-text-muted);">Notify your constituents</p>
-            <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">Send a recap of tonight</h1>
-            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);">Drafted from your briefing, the agenda, and your captured positions. Edit anything, choose who and when, then send.</p>
+            <p class="text-xs font-semibold uppercase tracking-wider mt-2" style="color: var(--gp-text-muted);">Pre-meeting message, draft</p>
+            <h1 class="text-2xl font-semibold mt-1 mb-2" style="color: var(--gp-text-primary); line-height: 1.25;">Tell your constituents what's happening tonight</h1>
+            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);">Drafted from your briefing and your three priorities. Edit anything, choose who and when, then send.</p>
 
             <!-- AUDIENCE selector -->
             <div class="selector-row mb-3" id="composedAudienceSelector">
@@ -4189,7 +4329,7 @@
 
             <!-- SCHEDULE selector -->
             <div class="selector-row mb-4" id="composedScheduleSelector">
-              <p class="label">Send when</p>
+              <p class="label">When to send</p>
               <button class="selector-summary" onclick="toggleSelector('composedScheduleSelector')">
                 <span class="selector-current">
                   <span class="sc-icon">
@@ -4214,19 +4354,19 @@
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-schedule="tomorrow-am" data-label="Tomorrow morning · Wed May 13, 8 AM" onclick="selectComposedSchedule(this)">
+                <button class="selector-option" data-schedule="hour-before" data-label="1 hour before the meeting · Tue May 12, 5:30 PM" onclick="selectComposedSchedule(this)">
                   <span>
-                    Tomorrow morning
-                    <span class="opt-meta block mt-0.5">Wed May 13 · 8:00 AM · highest open rate</span>
+                    1 hour before the meeting
+                    <span class="opt-meta block mt-0.5">Tue May 12 · 5:30 PM · top-of-mind reminder</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
                 </button>
-                <button class="selector-option" data-schedule="two-days" data-label="In 2 days · Thu May 14, 8 AM" onclick="selectComposedSchedule(this)">
+                <button class="selector-option" data-schedule="tomorrow-am" data-label="Tomorrow morning · Wed May 7, 8 AM" onclick="selectComposedSchedule(this)">
                   <span>
-                    In 2 days
-                    <span class="opt-meta block mt-0.5">Thu May 14 · 8:00 AM</span>
+                    Tomorrow morning
+                    <span class="opt-meta block mt-0.5">Wed May 7 · 8:00 AM · highest open rate</span>
                   </span>
                   <span class="opt-check">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -4249,7 +4389,7 @@
               <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Subject</label>
               <input
                 type="text"
-                value="Town Hall recap · Public safety, taxes, and Northside"
+                value="What's coming up at tonight's Town Hall"
                 class="draft-input mt-1.5"
               />
             </div>
@@ -4257,29 +4397,29 @@
             <!-- BODY -->
             <div class="mb-5">
               <label class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Message</label>
-              <textarea class="recap-textarea mt-1.5" id="composedBody" rows="22" style="min-height: 540px;">Hi neighbors, Renee here. Quick recap from tonight's meeting and what it means for you in Northside.
+              <textarea class="recap-textarea mt-1.5" id="composedBody" rows="22" style="min-height: 540px;">Hi neighbor, Renee here. Tonight's Town Hall covers three items I want to flag for you in Northside.
 
-1. CAMERAS · Resolution 2026-19 passed 5-2.
-I voted yes after staff confirmed our intersection at Riverside Ave is included in Phase 1, with quarterly privacy audits in the contract. Installation begins July 1. Public information sessions in late June.
+1. CAMERAS · Resolution 2026-19, vote tonight.
+A $2.4M contract for 8 public safety cameras, including coverage on Riverside Ave. I'm leaning yes, conditioned on quarterly privacy audits and Phase 1 finalizing Northside coverage before installation begins.
 
-2. FY27 TAX RATE · Discussion only, no vote tonight.
-The Town Manager presented three scenarios (flat, +1¢, +3¢). I declined to support any rate above flat until staff names the specific projects each cent funds. The first reading is May 21. I'll send a follow-up before then.
+2. FY27 TAX RATE · Discussion only tonight, first reading May 21.
+Three scenarios on the table: flat 17.6¢, 18.2¢, and 18.9¢. I plan to push staff to name the specific projects each cent above flat would fund before any rate gets adopted.
 
-3. NORTHSIDE REVITALIZATION · Final approval passed 7-0.
-The 15% affordable housing set-aside is now binding, with annual compliance reporting. Construction begins fall 2026. Displacement indicators (vacancy, rent change, business turnover) will be tracked from day one.
+3. NORTHSIDE REVITALIZATION · Final approval tonight.
+The conditions package for the $24M mixed-use project on the former mill site. I'm leaning yes if the 15% affordable housing set-aside stays intact with enforceable compliance triggers.
 
-Reply to this with any questions and I'll respond personally. The next meeting is May 26.
+Reach out before the meeting if you have questions or want me to raise something on your behalf. Reply to this email or text me at the number below.
 
 Renee Wells
 District 3</textarea>
-              <p class="text-xs mt-2" style="color: var(--gp-text-muted);">Drafted in 4 seconds from your briefing, position changes, and live notes.</p>
+              <p class="text-xs mt-2" style="color: var(--gp-text-muted);">Drafted in 4 seconds from your briefing and your three priorities.</p>
             </div>
 
             <!-- AUTOMATE -->
             <div class="automate-row mb-5">
               <div class="flex-1">
                 <p class="text-sm font-semibold" style="color: var(--gp-text-primary);">Automate this in the future</p>
-                <p class="text-xs mt-1" style="color: var(--gp-text-subtle); line-height: 1.5;">After future meetings, we'll draft and queue a recap automatically. You'll just need to approve before it sends.</p>
+                <p class="text-xs mt-1" style="color: var(--gp-text-subtle); line-height: 1.5;">Before future meetings, we'll draft a pre-meeting message automatically. You'll just need to approve before it sends.</p>
               </div>
               <label class="switch">
                 <input type="checkbox" id="automateToggleComposed" onchange="syncAutomatePref(this.checked)" />
@@ -4290,13 +4430,13 @@ District 3</textarea>
             <!-- ACTIONS -->
             <div>
               <button class="btn-primary" onclick="sendComposedRecap()">
-                Send
+                Send to constituents
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"/>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"/>
                 </svg>
               </button>
-              <button class="btn-outline w-full mt-3" onclick="showToast('Recap saved as draft')">Save draft</button>
+              <button class="btn-outline w-full mt-3" onclick="showToast('Pre-meeting message saved as draft')">Save draft</button>
             </div>
 
           </div>
@@ -5001,8 +5141,8 @@ District 3</textarea>
               </svg>
             </div>
 
-            <h1 class="text-2xl font-semibold mb-2" style="color: var(--gp-text-primary);">Sent</h1>
-            <p class="text-sm mb-8" style="color: var(--gp-text-subtle); max-width: 300px;">Your recap is on its way to <span style="color: var(--gp-text-primary); font-weight: 500;" id="sentAudienceCount">your Northside list</span>. Replies will start coming back within an hour.</p>
+            <h1 class="text-2xl font-semibold mb-2" style="color: var(--gp-text-primary);" id="sentScreenTitle">Sent</h1>
+            <p class="text-sm mb-8" style="color: var(--gp-text-subtle); max-width: 300px;" id="sentScreenBody">Your message is on its way to <span style="color: var(--gp-text-primary); font-weight: 500;" id="sentAudienceCount">your Northside list</span>. Replies will start coming back within an hour.</p>
 
             <div class="grid grid-cols-1 gap-3 w-full mb-6">
               <div class="gp-card-subtle p-4 text-center">
@@ -5049,9 +5189,9 @@ District 3</textarea>
               Home
             </button>
 
-            <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);">Recap sent · May 12</p>
+            <p class="text-xs font-semibold uppercase tracking-wider" style="color: var(--gp-text-muted);" id="statsEyebrow">Recap sent · May 12</p>
             <h1 class="text-2xl font-semibold mt-1 mb-1" style="color: var(--gp-text-primary); line-height: 1.25;">How it landed</h1>
-            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);">9:42 PM · Sent to <span id="statsRecipients">Northside neighborhood</span></p>
+            <p class="text-sm mb-5" style="color: var(--gp-text-subtle);" id="statsTimestamp">9:42 PM · Sent to <span id="statsRecipients">Northside neighborhood</span></p>
 
             <!-- Top stats grid -->
             <div class="stats-grid mb-4">
@@ -5666,7 +5806,7 @@ District 3</div>
     home: 'Home',
     briefings: 'GoodParty',
     briefing: 'Meeting doc',
-    'composed-recap': 'Recap',
+    'composed-recap': 'Pre-meeting message',
     'sms-draft': 'SMS draft',
     'sms-sent': 'Sent',
     feedback: 'Feedback',
@@ -7061,7 +7201,7 @@ District 3</div>
     if (checked) showToast('Automation on for next meeting');
   }
 
-  // Send the composed recap and route through the existing post-send experience
+  // Send the composed recap (PRE-meeting message) and route through the post-send experience
   function sendComposedRecap() {
     const active = document.querySelector('#composedAudienceSelector .selector-option.active');
     let recipientLabel = 'Northside neighborhood';
@@ -7081,6 +7221,17 @@ District 3</div>
     const cr = document.getElementById('recapStatsRecipients');
     if (sr) sr.textContent = recipientLabel;
     if (cr) cr.textContent = recipientLabel;
+
+    // Flip shared post-send labels into PRE-meeting framing
+    const sentTitle = document.getElementById('sentScreenTitle');
+    const sentBody = document.getElementById('sentScreenBody');
+    if (sentTitle) sentTitle.textContent = 'Pre-meeting message sent';
+    if (sentBody) sentBody.innerHTML = 'Your pre-meeting message is on its way to <span style="color: var(--gp-text-primary); font-weight: 500;" id="sentAudienceCount">' + recipientPhrase + '</span>. Replies will start coming back within an hour.';
+    const eyebrow = document.getElementById('statsEyebrow');
+    if (eyebrow) eyebrow.textContent = 'Pre-meeting message sent · May 6';
+    const ts = document.getElementById('statsTimestamp');
+    if (ts) ts.innerHTML = '9:42 AM · Sent to <span id="statsRecipients">' + recipientLabel + '</span>';
+
     document.querySelectorAll('#repliesFeed .reply-row').forEach(r => r.classList.remove('selected'));
     if (typeof refreshFollowUpCTA === 'function') refreshFollowUpCTA();
     goToScreen('recap-sent');
@@ -7168,6 +7319,16 @@ District 3</div>
     const cr = document.getElementById('recapStatsRecipients');
     if (sr) sr.textContent = recipientLabel;
     if (cr) cr.textContent = recipientLabel;
+
+    // Reset shared post-send labels to POST-meeting framing
+    const sentTitle = document.getElementById('sentScreenTitle');
+    const sentBody = document.getElementById('sentScreenBody');
+    if (sentTitle) sentTitle.textContent = 'Sent';
+    if (sentBody) sentBody.innerHTML = 'Your recap is on its way to <span style="color: var(--gp-text-primary); font-weight: 500;" id="sentAudienceCount">' + recipientPhrase + '</span>. Replies will start coming back within an hour.';
+    const eyebrow = document.getElementById('statsEyebrow');
+    if (eyebrow) eyebrow.textContent = 'Recap sent · May 12';
+    const ts = document.getElementById('statsTimestamp');
+    if (ts) ts.innerHTML = '9:42 PM · Sent to <span id="statsRecipients">' + recipientLabel + '</span>';
 
     // Reset reply selection state on each fresh send so demo restarts cleanly
     document.querySelectorAll('#repliesFeed .reply-row').forEach(r => r.classList.remove('selected'));
