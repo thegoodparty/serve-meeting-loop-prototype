@@ -3531,6 +3531,7 @@
                   <ul class="briefing-priorities">
                     <li>Northside framework</li>
                     <li>FY26 close-out</li>
+                    <li>Q1 budget review</li>
                   </ul>
                 </div>
               </button>
@@ -6387,7 +6388,6 @@ District 3</div>
     if (state !== 'not-started' && state !== 'in-progress' && state !== 'sent') return;
     try { localStorage.setItem('cc-v3-recap-state', state); } catch (e) {}
     document.body.dataset.recapState = state;
-    refreshBriefingsListPostState();
     refreshHomePostState();
   }
   function goToMeetingPostState() {
@@ -6396,37 +6396,6 @@ District 3</div>
     if (s === 'sent') goToScreen('recap-stats');
     else if (s === 'in-progress') goToScreen('recap-draft');
     else goToScreen('notes-upload');
-  }
-  function refreshBriefingsListPostState() {
-    // Update the "Just happened" row in Briefings list to reflect recapState
-    const row = document.getElementById('briefingsPostRow');
-    const meta = document.getElementById('briefingsPostRowMeta');
-    const chip = document.getElementById('briefingsPostChipDay');
-    if (!row || !meta) return;
-    const s = getRecapState();
-    if (s === 'sent') {
-      meta.innerHTML = '<span style="color: var(--gp-success); font-weight: 600;">Recap sent · 23 replies</span>';
-      row.style.borderColor = '#BBF7D0';
-      row.style.background = '#ECFDF3';
-      if (chip) {
-        chip.style.background = '#DCFCE7';
-        chip.style.borderColor = '#BBF7D0';
-        chip.querySelectorAll('.dmonth,.dnum').forEach(el => el.style.color = '#15803D');
-      }
-    } else {
-      // not-started or in-progress: same amber treatment
-      const copy = (s === 'in-progress')
-        ? '<span style="color: #92400E; font-weight: 600;">Recap in progress · Tap to continue</span>'
-        : '<span style="color: #92400E; font-weight: 600;">Wrapped 2 hours ago · Recap pending</span>';
-      meta.innerHTML = copy;
-      row.style.borderColor = '#FFD78A';
-      row.style.background = '#FFF7E6';
-      if (chip) {
-        chip.style.background = '#FEF3C7';
-        chip.style.borderColor = '#FFD78A';
-        chip.querySelectorAll('.dmonth,.dnum').forEach(el => el.style.color = '#92400E');
-      }
-    }
   }
   function refreshHomePostState() {
     // Swap Home's "Just happened" card vs sent status row based on state
@@ -7554,7 +7523,6 @@ District 3</div>
   function finishPostMeeting() {
     // recapState is already 'sent' at this point; refresh visuals + go home
     refreshHomePostState();
-    refreshBriefingsListPostState();
     goToScreen('home');
   }
 
@@ -7588,7 +7556,6 @@ District 3</div>
     const rs = getRecapState();
     document.body.dataset.recapState = rs;
     refreshHomePostState();
-    refreshBriefingsListPostState();
 
     // Legacy: keep sessionStorage flag in sync if recap was sent
     try {
