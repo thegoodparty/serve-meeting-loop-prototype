@@ -2457,6 +2457,12 @@
     .loop-issue .issue-section p.subtle {
       color: var(--gp-text-subtle);
     }
+    .loop-issue .issue-talk {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--gp-text-primary);
+      margin: 8px 0 14px 0;
+    }
 
     /* Position toggle (Yes/No/Abstain/Undecided) */
     .position-row {
@@ -3970,27 +3976,7 @@
               <article class="loop-issue" data-issue="cameras">
                 <div class="issue-rank"><span class="rank-dot"></span><span>Priority one, Item 7</span></div>
                 <h2>Public safety camera expansion</h2>
-                <p class="issue-why">Maps to the top issue you ran on: visible neighborhood safety. Resolution 2026-19 goes to a vote tonight.</p>
-
-                <div class="issue-section">
-                  <p class="label">What is it</p>
-                  <p>Vote tonight on a $2.4M contract for 8 cameras downtown and Northside. Installation starts July 1.</p>
-                </div>
-
-                <div class="issue-section">
-                  <p class="label">What constituents say</p>
-                  <p>Sentiment 57.9 out of 100, up 2.1 from March. Strongest support in Northside (64.2). Your top issue district-wide.</p>
-                </div>
-
-                <div class="issue-section">
-                  <p class="label">Recommended position</p>
-                  <p>Vote YES on Resolution 2026-19, conditioned on Northside coverage being finalized before Phase 1 installation.</p>
-                </div>
-
-                <div class="issue-section">
-                  <p class="label">Ideal outcome</p>
-                  <p class="subtle">All Northside intersections included in Phase 1, with a quarterly privacy audit clause in the contract.</p>
-                </div>
+                <p class="issue-talk">You're voting on the vendor contract and camera locations across the city. The vendor decision is mostly staff's call. The location map is where your voice matters. Look at the map before Monday. If the Northside and Ramsey Street corridor aren't on it, say so before the vote. Your silence will be read as agreement.</p>
 
                 <div class="position-row">
                   <div class="position-label">
@@ -4029,27 +4015,7 @@
               <article class="loop-issue" data-issue="tax">
                 <div class="issue-rank"><span class="rank-dot"></span><span>Priority two, Item 10</span></div>
                 <h2>FY27 property tax rate, three scenarios</h2>
-                <p class="issue-why">Holding the residential rate flat is your second governance priority. Discussion only tonight, first reading May 21.</p>
-
-                <div class="issue-section">
-                  <p class="label">What is it</p>
-                  <p>Discussion of three FY27 tax-rate scenarios: flat 17.6¢, 18.2¢, and 18.9¢. No vote tonight.</p>
-                </div>
-
-                <div class="issue-section">
-                  <p class="label">What constituents say</p>
-                  <p>Sentiment 54.4 out of 100, up 1.2 from March. Opposition to any rate above flat is rising. Northside is the strongest voice.</p>
-                </div>
-
-                <div class="issue-section">
-                  <p class="label">Recommended position</p>
-                  <p>Decline to support any rate above flat 17.6¢ until staff names the specific projects each cent funds.</p>
-                </div>
-
-                <div class="issue-section">
-                  <p class="label">Ideal outcome</p>
-                  <p class="subtle">Council names 2 to 3 specific projects that justify any rate above flat. No vote until residents see exactly what each cent funds.</p>
-                </div>
+                <p class="issue-talk">You're hearing three FY27 rate scenarios tonight: flat 17.6¢, 18.2¢, and 18.9¢. No vote tonight, first reading is May 21. The pressure point: staff hasn't said what each cent above flat actually funds. Ask. If they can't name two or three specific projects that justify the bump, decline to support any rate above flat. Northside opposition to a higher rate is rising; staying quiet tonight reads as openness to it.</p>
 
                 <div class="position-row">
                   <div class="position-label">
@@ -4088,27 +4054,7 @@
               <article class="loop-issue" data-issue="northside">
                 <div class="issue-rank"><span class="rank-dot"></span><span>Priority three, Item 13</span></div>
                 <h2>Northside revitalization, final ratification</h2>
-                <p class="issue-why">Smart growth on Northside is your third governance priority. Final vote tonight on the conditions package.</p>
-
-                <div class="issue-section">
-                  <p class="label">What is it</p>
-                  <p>Final ratification of the $24M mixed-use development on the former mill site. $4M city contribution via TIF.</p>
-                </div>
-
-                <div class="issue-section">
-                  <p class="label">What constituents say</p>
-                  <p>Sentiment 71.3 out of 100, up 0.4 from March. Strongest support in Northside (82). NNA endorsed unanimously after the 15% set-aside change.</p>
-                </div>
-
-                <div class="issue-section">
-                  <p class="label">Recommended position</p>
-                  <p>Vote YES on final approval with the 15% affordable housing set-aside intact.</p>
-                </div>
-
-                <div class="issue-section">
-                  <p class="label">Ideal outcome</p>
-                  <p class="subtle">The 15% affordable housing set-aside is enforceable, with measurable compliance triggers and a public reporting cadence.</p>
-                </div>
+                <p class="issue-talk">You're voting on the final approval of the Northside mixed-use development. The 15% affordable set-aside is the load-bearing piece. If enforcement gets diluted (no public quarterly reporting, no claw-back if the developer slips), the set-aside is paper. Ask staff to confirm the enforcement language before you vote. If they can't, push to delay. Northside is your strongest voice on this and will hold you to whatever you do.</p>
 
                 <div class="position-row">
                   <div class="position-label">
@@ -6124,16 +6070,23 @@ District 3</div>
     });
   }
 
+  function composeTalk(data) {
+    // Synthesize a single conversational paragraph from the structured altCopy fields.
+    // Order: recommended action, constituent context, ideal outcome.
+    const parts = [data.recPos, data.whatSay, data.ideal].filter(Boolean);
+    return parts.join(' ');
+  }
+
   function executeSwap(altKey, replaceKey, altTitle) {
     closeSwapPicker();
     const replaced = document.querySelector(`.loop-issue[data-issue="${replaceKey}"]`);
     if (replaced) {
       const h2 = replaced.querySelector('h2');
-      const why = replaced.querySelector('.issue-why');
+      const talk = replaced.querySelector('.issue-talk');
       const data = altCopy[altKey];
-      if (data && h2 && why) {
+      if (data && h2 && talk) {
         h2.textContent = data.title;
-        why.textContent = data.why;
+        talk.textContent = composeTalk(data);
       }
       replaced.setAttribute('data-issue', altKey);
       replaced.querySelectorAll('.position-toggle').forEach(t => t.setAttribute('data-issue', altKey));
@@ -6167,27 +6120,7 @@ District 3</div>
     article.innerHTML = `
       <div class="issue-rank"><span class="rank-dot"></span><span>Priority ${newRankWord}</span></div>
       <h2>${data.title}</h2>
-      <p class="issue-why">${data.why}</p>
-
-      <div class="issue-section">
-        <p class="label">What is it</p>
-        <p>${data.whatIs}</p>
-      </div>
-
-      <div class="issue-section">
-        <p class="label">What constituents say</p>
-        <p>${data.whatSay}</p>
-      </div>
-
-      <div class="issue-section">
-        <p class="label">Recommended position</p>
-        <p>${data.recPos}</p>
-      </div>
-
-      <div class="issue-section">
-        <p class="label">Ideal outcome</p>
-        <p class="subtle">${data.ideal}</p>
-      </div>
+      <p class="issue-talk">${composeTalk(data)}</p>
 
       <div class="position-row">
         <div class="position-label">
